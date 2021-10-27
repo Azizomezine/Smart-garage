@@ -11,7 +11,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     ui->tab_client->setModel(Etmp.afficher());
 ui->cin->setValidator(new QIntValidator(0,99999999,this));
-
+ui->cin_2->setValidator(new QIntValidator(0,99999999,this));
+ui->Numtel->setValidator(new QIntValidator(0,99999999,this));
+ui->Numtel_2->setValidator(new QIntValidator(0,99999999,this));
 }
 
 
@@ -71,12 +73,12 @@ void MainWindow::on_pushButtonModifier_clicked()
 {
 
 
-        int  CIN=ui->cin->text().toInt();
+        int  CIN=ui->cin_3->text().toInt();
         QString REF=ui->REF->text();
          QString NOM=ui->Nom->text();
           QString PRENOM=ui->Prenom->text();
-           QString ADRESSE_EMAIL=ui->Nom->text();
-         int Numtel=ui->Numtel->text().toInt();
+           QString ADRESSE_EMAIL=ui->AdresseEmail_2->text();
+         int Numtel=ui->Numtel_2->text().toInt();
         Client C(CIN,REF,NOM,PRENOM,Numtel,ADRESSE_EMAIL);
     bool test=C.modifier(CIN);
     if (test)
@@ -91,4 +93,9 @@ void MainWindow::on_pushButtonModifier_clicked()
                                   QObject::tr("Ajout non effectué.\n"
                                               "click Cancel to exit."),QMessageBox::Cancel);
 
+}
+
+void MainWindow::on_pushButtonActualiser_clicked()
+{
+     ui->tab_client->setModel(Etmp.afficher());
 }

@@ -7,27 +7,33 @@
     <x>0</x>
     <y>0</y>
     <width>1064</width>
-    <height>529</height>
+    <height>539</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Gestion des Clients</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">background-image: url(:/img/Capture.PNG);</string>
+  </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QTabWidget" name="Aj">
+   <widget class="QTabWidget" name="ModifierClient_2">
     <property name="geometry">
      <rect>
-      <x>20</x>
+      <x>0</x>
       <y>0</y>
-      <width>871</width>
-      <height>421</height>
+      <width>1071</width>
+      <height>491</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-image: url(:/im/Capture.PNG);</string>
     </property>
     <property name="tabShape">
      <enum>QTabWidget::Triangular</enum>
     </property>
     <property name="currentIndex">
-     <number>2</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -42,6 +48,14 @@
         <height>41</height>
        </rect>
       </property>
+      <property name="styleSheet">
+       <string notr="true">
+color: rgb(0, 170, 255);
+font-size:15px;
+font-style:italic;
+	
+</string>
+      </property>
       <property name="text">
        <string>REFERNCE</string>
       </property>
@@ -54,6 +68,14 @@
         <width>47</width>
         <height>21</height>
        </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">
+color: rgb(0, 170, 255);
+font-size:15px;
+font-style:italic;
+	
+</string>
       </property>
       <property name="text">
        <string>CIN</string>
@@ -68,6 +90,12 @@
         <height>31</height>
        </rect>
       </property>
+      <property name="styleSheet">
+       <string notr="true">
+color: rgb(0, 170, 255);
+font-size:15px;
+font-style:italic;</string>
+      </property>
       <property name="text">
        <string>Nom</string>
       </property>
@@ -81,6 +109,12 @@
         <height>14</height>
        </rect>
       </property>
+      <property name="styleSheet">
+       <string notr="true">
+color: rgb(0, 170, 255);
+font-size:15px;
+font-style:italic;</string>
+      </property>
       <property name="text">
        <string>Prenom</string>
       </property>
@@ -90,9 +124,15 @@
        <rect>
         <x>390</x>
         <y>140</y>
-        <width>47</width>
-        <height>14</height>
+        <width>61</width>
+        <height>16</height>
        </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">
+color: rgb(0, 170, 255);
+font-size:15px;
+font-style:italic;</string>
       </property>
       <property name="text">
        <string>Numtel</string>
@@ -101,11 +141,17 @@
      <widget class="QLabel" name="label_6">
       <property name="geometry">
        <rect>
-        <x>366</x>
+        <x>346</x>
         <y>220</y>
-        <width>91</width>
+        <width>111</width>
         <height>20</height>
        </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">
+color: rgb(0, 170, 255);
+font-size:15px;
+font-style:italic;</string>
       </property>
       <property name="text">
        <string>Adresse Email</string>
@@ -174,11 +220,19 @@
      <widget class="QPushButton" name="pushButtonAjouter">
       <property name="geometry">
        <rect>
-        <x>210</x>
-        <y>310</y>
-        <width>75</width>
-        <height>23</height>
+        <x>150</x>
+        <y>290</y>
+        <width>141</width>
+        <height>41</height>
        </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton{
+color: rgb(0, 170, 255);
+font-size:15px;
+font-style:italic;
+	
+}</string>
       </property>
       <property name="text">
        <string>Ajouter</string>
@@ -199,24 +253,30 @@
        </rect>
       </property>
      </widget>
+     <widget class="QPushButton" name="pushButtonActualiser">
+      <property name="geometry">
+       <rect>
+        <x>680</x>
+        <y>40</y>
+        <width>101</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">
+color: rgb(0, 170, 255);
+font-size:15px;
+font-style:italic;</string>
+      </property>
+      <property name="text">
+       <string>Actualiser</string>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="tab_3">
      <attribute name="title">
       <string>Supprimer Client</string>
      </attribute>
-     <widget class="QLabel" name="label_7">
-      <property name="geometry">
-       <rect>
-        <x>100</x>
-        <y>50</y>
-        <width>47</width>
-        <height>14</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>CIN</string>
-      </property>
-     </widget>
      <widget class="QLineEdit" name="cin_2">
       <property name="geometry">
        <rect>
@@ -240,11 +300,97 @@
        <string>Supprimer</string>
       </property>
      </widget>
+     <widget class="QLabel" name="label_11">
+      <property name="geometry">
+       <rect>
+        <x>100</x>
+        <y>50</y>
+        <width>47</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">
+color: rgb(0, 170, 255);
+font-size:15px;
+font-style:italic;
+	
+</string>
+      </property>
+      <property name="text">
+       <string>CIN</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="ModifierClient">
+     <attribute name="title">
+      <string>Modifier Client</string>
+     </attribute>
+     <widget class="QLineEdit" name="cin_3">
+      <property name="geometry">
+       <rect>
+        <x>150</x>
+        <y>70</y>
+        <width>113</width>
+        <height>20</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_8">
+      <property name="geometry">
+       <rect>
+        <x>70</x>
+        <y>70</y>
+        <width>47</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">
+color: rgb(0, 170, 255);
+font-size:15px;
+font-style:italic;
+	
+</string>
+      </property>
+      <property name="text">
+       <string>CIN</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_9">
+      <property name="geometry">
+       <rect>
+        <x>60</x>
+        <y>160</y>
+        <width>61</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">
+color: rgb(0, 170, 255);
+font-size:15px;
+font-style:italic;</string>
+      </property>
+      <property name="text">
+       <string>Numtel</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="Numtel_2">
+      <property name="geometry">
+       <rect>
+        <x>150</x>
+        <y>150</y>
+        <width>113</width>
+        <height>21</height>
+       </rect>
+      </property>
+     </widget>
      <widget class="QPushButton" name="pushButtonModifier">
       <property name="geometry">
        <rect>
-        <x>250</x>
-        <y>90</y>
+        <x>170</x>
+        <y>230</y>
         <width>75</width>
         <height>23</height>
        </rect>
@@ -253,11 +399,35 @@
        <string>Modifier</string>
       </property>
      </widget>
-    </widget>
-    <widget class="QWidget" name="tab_4">
-     <attribute name="title">
-      <string>Modifier Client</string>
-     </attribute>
+     <widget class="QLabel" name="label_10">
+      <property name="geometry">
+       <rect>
+        <x>380</x>
+        <y>70</y>
+        <width>111</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">
+color: rgb(0, 170, 255);
+font-size:15px;
+font-style:italic;</string>
+      </property>
+      <property name="text">
+       <string>Adresse Email</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="AdresseEmail_2">
+      <property name="geometry">
+       <rect>
+        <x>530</x>
+        <y>70</y>
+        <width>121</width>
+        <height>20</height>
+       </rect>
+      </property>
+     </widget>
     </widget>
    </widget>
   </widget>
