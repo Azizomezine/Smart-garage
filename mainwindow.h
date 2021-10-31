@@ -25,6 +25,8 @@ private slots:
 
     void on_pushButtonActualiser_clicked();
 
+    void on_pushButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     Client Etmp;

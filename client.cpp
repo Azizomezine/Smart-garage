@@ -51,14 +51,14 @@ bool Client::supprimer(int CIN )
 {
 QSqlQuery query;
 QString res= QString::number(CIN);
-query.prepare("Delete from client where CIN = :CIN ");
+query.prepare("Delete from CLIENT where CIN = :CIN ");
 query.bindValue(":CIN", res);
 return    query.exec();
 }
 QSqlQueryModel * Client::afficher()
 {QSqlQueryModel * model= new QSqlQueryModel();
 
-model->setQuery("select * from client");
+model->setQuery("select * from CLIENT");
 model->setHeaderData(0, Qt::Horizontal, QObject::tr("CIN"));
 model->setHeaderData(1, Qt::Horizontal, QObject::tr("REF"));
 model->setHeaderData(2, Qt::Horizontal, QObject::tr("Nom "));
@@ -68,12 +68,12 @@ model->setHeaderData(5, Qt::Horizontal, QObject::tr("Numtel"));
 
     return model;
 }
-bool Client::modifier(int REF)
+bool Client::modifier(int CIN)
 {
     QSqlQuery query;
     QString CINstring=QString::number(CIN);
     QString Numtel_string=QString::number(Numtel);
-    query.prepare("UPDATE client SET CIN=CIN,REF=:REF,NOM=:NOM,PRENOM=:PRENOM,ADRESSE_Email=:ADRESSE_Email WHERE CIN=:CIN");
+    query.prepare("UPDATE CLIENT SET CIN=CIN,REF=:REF,NOM=:NOM,PRENOM=:PRENOM,ADRESSE_Email=:ADRESSE_Email,Numtel=:Numtel WHERE CIN=:CIN");
     query.bindValue(":REF", REF);
     query.bindValue(":NOM", NOM);
     query.bindValue(":PRENOM", PRENOM);
@@ -82,4 +82,13 @@ bool Client::modifier(int REF)
     query.bindValue(":Numtel",Numtel_string);
     return    query.exec();
 
+}
+QSqlQueryModel * Client::rechercher(QString search)
+{
+    QSqlQueryModel * model= new QSqlQueryModel();
+       QString qry="select * from supplement where IDS like '%"+search+"%' or NOM like '%"+search+"%' or TYPE like '%"+search+"%' or PRIX like '%"+search+"%' ";
+       qDebug()<<qry;
+
+       model->setQuery(qry);
+       return model;
 }
