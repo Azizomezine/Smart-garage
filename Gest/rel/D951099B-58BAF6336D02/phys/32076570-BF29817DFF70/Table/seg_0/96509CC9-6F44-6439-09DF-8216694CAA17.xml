@@ -1,0 +1,64 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<TableProxyOraclev11g class="oracle.dbtools.crest.model.design.storage.oracle.v11g.TableProxyOraclev11g" name="PERSONNEL" directorySegmentName="seg_0" id="96509CC9-6F44-6439-09DF-8216694CAA17">
+<createdBy>azizo</createdBy>
+<createdTime>2021-11-03 17:37:43 UTC</createdTime>
+<ownerDesignName>Gest</ownerDesignName>
+<schemaObject>ACA43D5F-C203-F0BB-0E16-7B6DDE9F2B70</schemaObject>
+<logging>YES</logging>
+<partitionedRowMovement>DISABLE</partitionedRowMovement>
+<segment>6621533B-F3A3-7176-7C84-A857AB7FADAD</segment>
+<tableSpace>35473DAB-80A5-5A51-E141-460613127118</tableSpace>
+<temporaryChanged>false</temporaryChanged>
+<accessDriverType>oracle_loader</accessDriverType>
+<rejectLimit></rejectLimit>
+<columnProxies itemClass="oracle.dbtools.crest.model.design.storage.oracle.v12c.ColumnProxyOraclev12c">
+<ColumnProxy name="FONCTION" id="01FD595E-B80D-D1EC-0D66-CAA7F8BD0276">
+<createdBy>azizo</createdBy>
+<createdTime>2021-11-03 17:37:43 UTC</createdTime>
+<ownerDesignName>Gest</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="NOM" id="0A00D457-72AF-773C-8D0C-80D1D3DFAF5E">
+<createdBy>azizo</createdBy>
+<createdTime>2021-11-03 17:37:43 UTC</createdTime>
+<ownerDesignName>Gest</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="CIN_EMP" id="1A01002F-7207-ABFA-EA8B-046CEDC340C5">
+<createdBy>azizo</createdBy>
+<createdTime>2021-11-03 17:37:43 UTC</createdTime>
+<ownerDesignName>Gest</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="PRENOM" id="3117CAC0-6B7E-0A94-C8B5-143DBD7B5BBB">
+<createdBy>azizo</createdBy>
+<createdTime>2021-11-03 17:37:43 UTC</createdTime>
+<ownerDesignName>Gest</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="SALAIRE" id="3C70B6CB-D744-A9DC-B427-BA1FC4744B51">
+<createdBy>azizo</createdBy>
+<createdTime>2021-11-03 17:37:43 UTC</createdTime>
+<ownerDesignName>Gest</ownerDesignName>
+</ColumnProxy>
+</columnProxies>
+<indexProxies>
+<IndexProxy class="oracle.dbtools.crest.model.design.storage.oracle.v10g.IndexProxyOraclev10g" name="PKS" id="6B8EC90D-3607-C979-30E1-C5284CCF7DE8">
+<createdBy>azizo</createdBy>
+<createdTime>2021-11-03 17:37:44 UTC</createdTime>
+<ownerDesignName>Gest</ownerDesignName>
+<schemaObject>ACA43D5F-C203-F0BB-0E16-7B6DDE9F2B70</schemaObject>
+<segment>639A9100-2B3F-DD2E-3C20-C0CB36EFDEF5</segment>
+<tableSpace>35473DAB-80A5-5A51-E141-460613127118</tableSpace>
+</IndexProxy>
+</indexProxies>
+<primaryKeys>
+<PrimaryKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.PKProxyOraclev10g" name="PKS" id="BF688404-DF2E-B121-2FBD-43670B13DD17">
+<createdBy>azizo</createdBy>
+<createdTime>2021-11-03 17:37:44 UTC</createdTime>
+<ownerDesignName>Gest</ownerDesignName>
+<segment>639A9100-2B3F-DD2E-3C20-C0CB36EFDEF5</segment>
+<tableSpace>35473DAB-80A5-5A51-E141-460613127118</tableSpace>
+<existingIndex>6B8EC90D-3607-C979-30E1-C5284CCF7DE8</existingIndex>
+<indexSegment>639A9100-2B3F-DD2E-3C20-C0CB36EFDEF5</indexSegment>
+<indexSort>SORTED</indexSort>
+<usingIndex>BY INDEX NAME</usingIndex>
+</PrimaryKey>
+</primaryKeys>
+</TableProxyOraclev11g>

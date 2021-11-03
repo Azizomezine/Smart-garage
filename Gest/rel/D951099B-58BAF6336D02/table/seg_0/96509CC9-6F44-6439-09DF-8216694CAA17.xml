@@ -1,0 +1,118 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="96509CC9-6F44-6439-09DF-8216694CAA17" schemaObject="ACA43D5F-C203-F0BB-0E16-7B6DDE9F2B70" name="PERSONNEL">
+<sourceConnName>test-bd</sourceConnName>
+<sourceObjSchema>AZIZ1</sourceObjSchema>
+<sourceObjName>PERSONNEL</sourceObjName>
+<createdBy>azizo</createdBy>
+<createdTime>2021-11-03 17:37:43 UTC</createdTime>
+<ownerDesignName>Gest</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="CIN_EMP" id="1A01002F-7207-ABFA-EA8B-046CEDC340C5">
+<sourceConnName>test-bd</sourceConnName>
+<sourceObjSchema>PERSONNEL</sourceObjSchema>
+<sourceObjName>CIN_EMP</sourceObjName>
+<createdBy>azizo</createdBy>
+<createdTime>2021-11-03 17:37:43 UTC</createdTime>
+<ownerDesignName>Gest</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>*</dataTypePrecision>
+<dataTypeScale>0</dataTypeScale>
+<ownDataTypeParameters>,*,0</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="NOM" id="0A00D457-72AF-773C-8D0C-80D1D3DFAF5E">
+<sourceConnName>test-bd</sourceConnName>
+<sourceObjSchema>PERSONNEL</sourceObjSchema>
+<sourceObjName>NOM</sourceObjName>
+<createdBy>azizo</createdBy>
+<createdTime>2021-11-03 17:37:43 UTC</createdTime>
+<ownerDesignName>Gest</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>10 BYTE</dataTypeSize>
+<ownDataTypeParameters>10 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="PRENOM" id="3117CAC0-6B7E-0A94-C8B5-143DBD7B5BBB">
+<sourceConnName>test-bd</sourceConnName>
+<sourceObjSchema>PERSONNEL</sourceObjSchema>
+<sourceObjName>PRENOM</sourceObjName>
+<createdBy>azizo</createdBy>
+<createdTime>2021-11-03 17:37:43 UTC</createdTime>
+<ownerDesignName>Gest</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>10 BYTE</dataTypeSize>
+<ownDataTypeParameters>10 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="FONCTION" id="01FD595E-B80D-D1EC-0D66-CAA7F8BD0276">
+<sourceConnName>test-bd</sourceConnName>
+<sourceObjSchema>PERSONNEL</sourceObjSchema>
+<sourceObjName>FONCTION</sourceObjName>
+<createdBy>azizo</createdBy>
+<createdTime>2021-11-03 17:37:43 UTC</createdTime>
+<ownerDesignName>Gest</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>20 BYTE</dataTypeSize>
+<ownDataTypeParameters>20 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="SALAIRE" id="3C70B6CB-D744-A9DC-B427-BA1FC4744B51">
+<sourceConnName>test-bd</sourceConnName>
+<sourceObjSchema>PERSONNEL</sourceObjSchema>
+<sourceObjName>SALAIRE</sourceObjName>
+<createdBy>azizo</createdBy>
+<createdTime>2021-11-03 17:37:43 UTC</createdTime>
+<ownerDesignName>Gest</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT021</logicalDatatype>
+<dataTypePrecision>126</dataTypePrecision>
+<ownDataTypeParameters>,126,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="BF688404-DF2E-B121-2FBD-43670B13DD17" name="PKS">
+<sourceConnName>test-bd</sourceConnName>
+<sourceObjSchema>AZIZ1</sourceObjSchema>
+<sourceObjName>PKS</sourceObjName>
+<createdBy>azizo</createdBy>
+<createdTime>2021-11-03 17:37:44 UTC</createdTime>
+<ownerDesignName>Gest</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="1A01002F-7207-ABFA-EA8B-046CEDC340C5"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="6B8EC90D-3607-C979-30E1-C5284CCF7DE8" schemaObject="ACA43D5F-C203-F0BB-0E16-7B6DDE9F2B70" name="PKS">
+<sourceConnName>test-bd</sourceConnName>
+<sourceObjSchema>AZIZ1</sourceObjSchema>
+<sourceObjName>PKS</sourceObjName>
+<createdBy>azizo</createdBy>
+<createdTime>2021-11-03 17:37:44 UTC</createdTime>
+<ownerDesignName>Gest</ownerDesignName>
+<indexState>Unique Plain Index</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="1A01002F-7207-ABFA-EA8B-046CEDC340C5"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>
