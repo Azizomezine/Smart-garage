@@ -64,8 +64,8 @@
      <widget class="QTabWidget" name="ModifierClient_2">
       <property name="geometry">
        <rect>
-        <x>20</x>
-        <y>50</y>
+        <x>10</x>
+        <y>60</y>
         <width>1071</width>
         <height>491</height>
        </rect>
@@ -77,7 +77,7 @@
        <enum>QTabWidget::Triangular</enum>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="tab">
        <attribute name="title">
@@ -246,7 +246,7 @@ font-style:italic;</string>
        <widget class="QLineEdit" name="Numtel">
         <property name="geometry">
          <rect>
-          <x>480</x>
+          <x>490</x>
           <y>140</y>
           <width>113</width>
           <height>20</height>
@@ -345,16 +345,6 @@ font-style:italic;
        <attribute name="title">
         <string>Modifier Client</string>
        </attribute>
-       <widget class="QLineEdit" name="cin_3">
-        <property name="geometry">
-         <rect>
-          <x>150</x>
-          <y>70</y>
-          <width>113</width>
-          <height>20</height>
-         </rect>
-        </property>
-       </widget>
        <widget class="QLabel" name="label_8">
         <property name="geometry">
          <rect>
@@ -503,21 +493,21 @@ font-style:italic;
          </property>
         </item>
        </widget>
+       <widget class="QComboBox" name="cin_comboBox2">
+        <property name="geometry">
+         <rect>
+          <x>160</x>
+          <y>70</y>
+          <width>131</width>
+          <height>22</height>
+         </rect>
+        </property>
+       </widget>
       </widget>
       <widget class="QWidget" name="tab_3">
        <attribute name="title">
         <string>Supprimer Client</string>
        </attribute>
-       <widget class="QLineEdit" name="cin_2">
-        <property name="geometry">
-         <rect>
-          <x>170</x>
-          <y>50</y>
-          <width>113</width>
-          <height>20</height>
-         </rect>
-        </property>
-       </widget>
        <widget class="QPushButton" name="pushButtonSupprimer">
         <property name="geometry">
          <rect>
@@ -552,6 +542,21 @@ font-style:italic;
          <string>CIN</string>
         </property>
        </widget>
+       <widget class="QComboBox" name="cin_comboBox">
+        <property name="geometry">
+         <rect>
+          <x>180</x>
+          <y>50</y>
+          <width>111</width>
+          <height>22</height>
+         </rect>
+        </property>
+        <item>
+         <property name="text">
+          <string/>
+         </property>
+        </item>
+       </widget>
       </widget>
       <widget class="QWidget" name="tab_2">
        <attribute name="title">
@@ -565,25 +570,6 @@ font-style:italic;
           <width>611</width>
           <height>331</height>
          </rect>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="pushButtonActualiser">
-        <property name="geometry">
-         <rect>
-          <x>680</x>
-          <y>40</y>
-          <width>101</width>
-          <height>41</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">
-color: rgb(0, 170, 255);
-font-size:15px;
-font-style:italic;</string>
-        </property>
-        <property name="text">
-         <string>Actualiser</string>
         </property>
        </widget>
        <widget class="QPushButton" name="pushButtonRechercher">
@@ -679,6 +665,25 @@ font-style:italic;</string>
         </property>
         <property name="text">
          <string/>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButtonActualiser">
+        <property name="geometry">
+         <rect>
+          <x>730</x>
+          <y>20</y>
+          <width>101</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">
+color: rgb(0, 170, 255);
+font-size:15px;
+font-style:italic;</string>
+        </property>
+        <property name="text">
+         <string>Actualiser</string>
         </property>
        </widget>
       </widget>
@@ -871,14 +876,27 @@ font-style:italic;</string>
        <widget class="QPushButton" name="pushButtonSupprimer_2">
         <property name="geometry">
          <rect>
-          <x>90</x>
+          <x>120</x>
           <y>370</y>
           <width>131</width>
-          <height>41</height>
+          <height>61</height>
          </rect>
         </property>
         <property name="text">
          <string>Supprimer</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButtonModifieravis">
+        <property name="geometry">
+         <rect>
+          <x>330</x>
+          <y>370</y>
+          <width>131</width>
+          <height>61</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Modifier</string>
         </property>
        </widget>
       </widget>

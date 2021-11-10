@@ -52,6 +52,14 @@ private slots:
 
   void on_pushButtonSupprimer_2_clicked();
 
+
+
+  void on_pushButtonModifieravis_clicked();
+
+
+
+
+
 private:
     Ui::MainWindow *ui;
     Client Etmp;

@@ -49,3 +49,20 @@ bool avis::supprimer(QString ref_avis )
  query.bindValue(":ref_avis", ref_avis);
  return    query.exec();
  }
+bool avis::modifier(QString ref_avis)
+{
+    QSqlQuery query;
+    query.prepare("UPDATE AVIS SET REF_AVIS=REF_AVIS,TYPE_AVIS=:TYPE_AVIS,AVIS=:AVIS WHERE REF_AVIS=:REF_AVIS");
+    query.bindValue(":REF_AVIS", ref_avis);
+    query.bindValue(":TYPE_AVIS",type_avis);
+ query.bindValue(":AVIS",Avis);
+    return    query.exec();
+
+}
+QSqlQueryModel * avis::rechercher(QString rech)
+{
+    QSqlQueryModel * model= new QSqlQueryModel();
+        QString recher="select *  from AVIS where REF_AVIS like '%"+rech+"%'or TYPE_AVIS like '%"+rech+"%'or AVIS like '%"+rech+"%'";
+        model->setQuery(recher);
+        return model;
+}

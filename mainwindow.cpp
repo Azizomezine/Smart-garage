@@ -19,9 +19,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     ui->tab_client->setModel(Etmp.afficher());
 ui->tableavis->setModel(at.afficher());
-ui->cin->setValidator(new QIntValidator(0,99999999,this));
-ui->cin_2->setValidator(new QIntValidator(0,99999999,this));
-ui->cin_3->setValidator(new QIntValidator(0,99999999,this));
+ui->cin->setValidator(new QIntValidator(111111111,99999999,this));
 ui->Numtel->setValidator(new QIntValidator(0,99999999,this));
 ui->Numtel_2->setValidator(new QIntValidator(0,99999999,this));
 ui->Nom->setMaxLength(10);
@@ -60,11 +58,11 @@ void MainWindow::on_pushButtonAjouter_clicked()
                          }
 
     else
+
     {
 bool test=C.ajouter();
 if (test)
-        { //Actualiser
-     ui->tab_client->setModel(Etmp.afficher());
+        {
         QMessageBox:: information(nullptr, QObject::tr("OK"),
                                            QObject::tr("Ajout Client effectué\n"
                                                        "click cancel to exit."),QMessageBox::Cancel);
@@ -76,69 +74,81 @@ if (test)
     }}
 
 void MainWindow::on_pushButtonSupprimer_clicked()
-{  Client c;c.setCIN(ui->cin_2->text().toInt());
-    if(c.get_CIN()<=0)
-    {
-        QMessageBox::critical(0,qApp->tr("erreur"),qApp->tr("veillez remplir les champs vides Pour continuez."),QMessageBox::Cancel);
-    }
-
-else
-
-
 {
-    bool test=Etmp.supprimer(c.get_CIN());
-    QMessageBox msgBox;
+    int cin=ui->cin_comboBox->currentText().toInt();
+
+    if(cin<=0)
+           {
+               QMessageBox::critical(0,qApp->tr("erreur"),
+                                     qApp->tr("veillez remplir le champs vide"),QMessageBox::Cancel);
+           }
+    else {
+        QMessageBox::critical(0,qApp->tr("attention"),
+                                    qApp->tr("voulez vous supprimer cette depense?"),QMessageBox::Yes,QMessageBox::No);
+        if(QMessageBox::Yes)
+               {
+    bool test=Etmp.supprimer(cin);
+
 
     if (test)
             {
-        //actualiser
-         ui->tab_client->setModel(Etmp.afficher());
+
+         ui->tab_client->setModel(Etmp.rechercher(""));
+          ui->tab_client->clearSelection();
             QMessageBox:: information(nullptr, QObject::tr("OK"),
                                                QObject::tr("Suppression d'un client avec succes\n"
                                                            "click cancel to exit."),QMessageBox::Cancel);
+
+            QSqlQueryModel * model= new QSqlQueryModel;
+                   model->setQuery("SELECT CIN FROM client");
+
+                   ui->cin_comboBox->setModel(model);
+
             }
         else
             QMessageBox::critical(nullptr, QObject::tr("Not OK"),
                                   QObject::tr("Suppression non effectué.\n"
                                               "click Cancel to exit."),QMessageBox::Cancel);
-}}
+}}}
 
 void MainWindow::on_pushButtonModifier_clicked()
 {
-
-
-        int  CIN=ui->cin_3->text().toInt();
-        QString REF=ui->REF->text();
+int CIN=ui->cin_comboBox->currentText().toInt();
          QString NOM=ui->Nom->text();
+         QString REF=ui->REF->text();
           QString PRENOM=ui->Prenom->text();
            QString ADRESSE_EMAIL=ui->AdresseEmail_2->text();
          int Numtel=ui->Numtel_2->text().toInt();
          QString SERVICE=ui->comboBox_2->currentText();
         Client C(CIN,REF,NOM,PRENOM,Numtel,ADRESSE_EMAIL,SERVICE);
     bool test=C.modifier(CIN);
-    if(CIN<=0||REF.isEmpty() || NOM.isEmpty() || PRENOM.isEmpty() ||SERVICE.isEmpty())
-                         {
-                             QMessageBox::critical(0,qApp->tr("erreur"),qApp->tr("veillez remplir les champs vides Pour continuez."),QMessageBox::Cancel);
-                         }
-    else
-    {
+
+
     if (test)
-            { //Actualiser
-         ui->tab_client->setModel(Etmp.afficher());
+            {
+
             QMessageBox:: information(nullptr, QObject::tr("OK"),
                                                QObject::tr("Modifier un Client effectué\n"
                                                            "click cancel to exit."),QMessageBox::Cancel);
+            QSqlQueryModel * model= new QSqlQueryModel;
+            model->setQuery("SELECT CIN FROM CLIENT");
+
             }
         else
-            QMessageBox::critical(nullptr, QObject::tr("Not OK"),
+           { QMessageBox::critical(nullptr, QObject::tr("Not OK"),
                                   QObject::tr("Ajout non effectué.\n"
-                                              "click Cancel to exit."),QMessageBox::Cancel);
+                                              "click Cancel to exit."),QMessageBox::Cancel);}
 
-}}
+}
+
 
 void MainWindow::on_pushButtonActualiser_clicked()
 {
-     ui->tab_client->setModel(Etmp.afficher());
+    ui->tab_client->setModel(Etmp.afficher());
+     QSqlQueryModel * model= new QSqlQueryModel;
+                      model->setQuery("SELECT CIN FROM client");
+                  ui->cin_comboBox2->setModel(model);
+                      ui->cin_comboBox->setModel(model);
 }
 
 
@@ -220,6 +230,16 @@ if (test)
 
 void MainWindow::on_qrcodegen_clicked()
 {
+
+    QMessageBox msg;
+          QItemSelectionModel *select = ui->tab_client->selectionModel();
+          if (!select->hasSelection()){
+               msg.setText("Please select something");
+
+               msg.setIcon(msg.Critical);
+               msg.exec();
+               return;
+          }
     int tabeq=ui->tab_client->currentIndex().row();
            QVariant idd=ui->tab_client->model()->data(ui->tab_client->model()->index(tabeq,0));
            QString id= idd.toString();
@@ -265,13 +285,22 @@ ui->tableavis->setModel(at.afficher());
 
 void MainWindow::on_pushButtonSupprimer_2_clicked()
 {
-    QItemSelectionModel *select = ui->tableavis->selectionModel();
+    QMessageBox msg;
+           QItemSelectionModel *select = ui->tableavis->selectionModel();
+          if (!select->hasSelection()){
+               msg.setText("Please select something");
+
+               msg.setIcon(msg.Critical);
+               msg.exec();
+               return;
+          }
+
 
               QString ref =select->selectedRows(0).value(0).data().toString();
 
               if(at.supprimer(ref))
-              {
-                  ui->tab_client->setModel(Etmp.afficher());
+              { //Actualiser
+                  ui->tab_client->setModel(at.afficher());
                   QMessageBox:: information(nullptr, QObject::tr("OK"),
                                                      QObject::tr("Suppression effectué\n"
                                                                  "click cancel to exit."),QMessageBox::Cancel);
@@ -281,5 +310,19 @@ void MainWindow::on_pushButtonSupprimer_2_clicked()
                                         QObject::tr("Suppression non effectué.\n"
                                                     "click Cancel to exit."),QMessageBox::Cancel);
               }
+
+
+
+
+void MainWindow::on_pushButtonModifieravis_clicked()
+{
+
+}
+
+
+
+
+
+
 
 
