@@ -60,6 +60,8 @@ private slots:
 
 
 
+  void on_cin_comboBox2_activated(const QString &arg1);
+
 private:
     Ui::MainWindow *ui;
     Client Etmp;

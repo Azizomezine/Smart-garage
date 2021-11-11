@@ -34,7 +34,6 @@ void  Client::setCIN( int CIN){this->CIN=CIN;}
 void Client::setADRESSE_Email(QString ADRESSE_Email) {this->ADRESSE_Email=ADRESSE_Email;}
 void Client::setService(QString SERVICE) {this->SERVICE=SERVICE;}
 void  Client::setNumtel(int Numetel) {this->Numtel=Numetel;}
-
 bool Client::ajouter()
 {
 QSqlQuery query;

@@ -19,14 +19,14 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     ui->tab_client->setModel(Etmp.afficher());
 ui->tableavis->setModel(at.afficher());
-ui->cin->setValidator(new QIntValidator(111111111,99999999,this));
+ui->cin->setValidator(new QIntValidator(0,99999999,this));
 ui->Numtel->setValidator(new QIntValidator(0,99999999,this));
 ui->Numtel_2->setValidator(new QIntValidator(0,99999999,this));
-ui->Nom->setMaxLength(10);
-ui->REF->setMaxLength(20);
-ui->REF2->setMaxLength(30);
-ui->Prenom->setMaxLength(30);
-
+ui->AdresseEmail->setValidator(new QRegExpValidator( QRegExp("[A-Za-z0-9_@.]{0,64}"), this ));
+ui->Nom->setValidator(new QRegExpValidator( QRegExp("[A-Za-z0]{0,10}"), this ));
+ui->REF->setValidator(new QRegExpValidator( QRegExp("[A-Za-z0-9]{0,10}"), this ));
+ui->REF2->setValidator(new QRegExpValidator( QRegExp("[A-Za-z0]{0,10}"), this ));
+ui->Prenom->setValidator(new QRegExpValidator( QRegExp("[A-Za-z0]{0,10}"), this ));
 }
 
 
@@ -44,18 +44,29 @@ void MainWindow::on_pushButtonAjouter_clicked()
 {
 
     int  CIN=ui->cin->text().toInt();
-
+//recuperation des donnees
     QString REF=ui->REF->text();
      QString NOM=ui->Nom->text();
       QString PRENOM=ui->Prenom->text();
-       QString ADRESSE_EMAIL=ui->Nom->text();
+       QString ADRESSE_EMAIL=ui->AdresseEmail->text();
      int Numtel=ui->Numtel->text().toInt();
      QString SERVICE=ui->comboBox->currentText();
+     //ajout
     Client C(CIN,REF,NOM,PRENOM,Numtel,ADRESSE_EMAIL,SERVICE);
-    if(CIN<=0||REF.isEmpty() || NOM.isEmpty() || PRENOM.isEmpty() ||SERVICE.isEmpty())
+    if(CIN<=0||REF.isEmpty() || NOM.isEmpty() || PRENOM.isEmpty() ||SERVICE.isEmpty() || ADRESSE_EMAIL.isEmpty())
                          {
                              QMessageBox::critical(0,qApp->tr("erreur"),qApp->tr("veillez remplir les champs vides Pour continuez."),QMessageBox::Cancel);
                          }
+   else if ((CIN<10000000)||(CIN>99999999) )
+           {
+
+        QMessageBox::critical(0,qApp->tr("erreur"),qApp->tr("Echec de l'ajout veuillez verifier le CIN(8 chiffres)"),QMessageBox::Cancel);
+    }
+    else if ((Numtel<10000000)||(Numtel>99999999) )
+           {
+
+        QMessageBox::critical(0,qApp->tr("erreur"),qApp->tr("Echec de l'ajout veuillez verifier le num tel(8 chiffres)"),QMessageBox::Cancel);
+    }
 
     else
 
@@ -66,6 +77,13 @@ if (test)
         QMessageBox:: information(nullptr, QObject::tr("OK"),
                                            QObject::tr("Ajout Client effectué\n"
                                                        "click cancel to exit."),QMessageBox::Cancel);
+         ui->cin->clear();
+         ui->REF->clear();
+         ui->Prenom->clear();
+         ui->Nom->clear();
+         ui->Numtel->clear();
+        ui->AdresseEmail->clear();
+        ui->comboBox->setCurrentIndex(0);
         }
     else
         QMessageBox::critical(nullptr, QObject::tr("Not OK"),
@@ -83,18 +101,15 @@ void MainWindow::on_pushButtonSupprimer_clicked()
                                      qApp->tr("veillez remplir le champs vide"),QMessageBox::Cancel);
            }
     else {
-        QMessageBox::critical(0,qApp->tr("attention"),
-                                    qApp->tr("voulez vous supprimer cette depense?"),QMessageBox::Yes,QMessageBox::No);
-        if(QMessageBox::Yes)
-               {
+
     bool test=Etmp.supprimer(cin);
 
 
     if (test)
             {
 
-         ui->tab_client->setModel(Etmp.rechercher(""));
-          ui->tab_client->clearSelection();
+        /* ui->tab_client->setModel(Etmp.rechercher(""));
+          ui->tab_client->clearSelection();*/
             QMessageBox:: information(nullptr, QObject::tr("OK"),
                                                QObject::tr("Suppression d'un client avec succes\n"
                                                            "click cancel to exit."),QMessageBox::Cancel);
@@ -109,21 +124,25 @@ void MainWindow::on_pushButtonSupprimer_clicked()
             QMessageBox::critical(nullptr, QObject::tr("Not OK"),
                                   QObject::tr("Suppression non effectué.\n"
                                               "click Cancel to exit."),QMessageBox::Cancel);
-}}}
+}}
 
 void MainWindow::on_pushButtonModifier_clicked()
 {
 int CIN=ui->cin_comboBox->currentText().toInt();
-         QString NOM=ui->Nom->text();
-         QString REF=ui->REF->text();
-          QString PRENOM=ui->Prenom->text();
+         QString NOM=ui->Nom_2->text();
+         QString REF=ui->REF_2->text();
+          QString PRENOM=ui->Prenom_2->text();
            QString ADRESSE_EMAIL=ui->AdresseEmail_2->text();
          int Numtel=ui->Numtel_2->text().toInt();
          QString SERVICE=ui->comboBox_2->currentText();
         Client C(CIN,REF,NOM,PRENOM,Numtel,ADRESSE_EMAIL,SERVICE);
-    bool test=C.modifier(CIN);
+bool test=C.modifier(CIN);
+    if ((Numtel<10000000)||(Numtel>99999999) )
+           {
 
-
+        QMessageBox::critical(0,qApp->tr("erreur"),qApp->tr("Echec de l'ajout veuillez verifier le num tel(8 chiffres)"),QMessageBox::Cancel);
+    }
+else {
     if (test)
             {
 
@@ -139,7 +158,7 @@ int CIN=ui->cin_comboBox->currentText().toInt();
                                   QObject::tr("Ajout non effectué.\n"
                                               "click Cancel to exit."),QMessageBox::Cancel);}
 
-}
+}}
 
 
 void MainWindow::on_pushButtonActualiser_clicked()
@@ -200,7 +219,7 @@ void MainWindow::on_pushButtonAjouteravis_clicked()
 
 
     QString ref_avis=ui->Ref_avis->text();
-     QString type_avis=ui->Type_avis->text();
+     QString type_avis=ui->typecomboBox->currentText();
       QString Avis=ui->texteavis->text();
     avis A( ref_avis, type_avis, Avis);
     if(ref_avis.isEmpty() || type_avis.isEmpty() || Avis.isEmpty())
@@ -317,6 +336,43 @@ void MainWindow::on_pushButtonSupprimer_2_clicked()
 void MainWindow::on_pushButtonModifieravis_clicked()
 {
 
+QMessageBox msg;
+
+  QString ref_avis=ui->Ref_avis->text();
+     QString type_avis=ui->typecomboBox_2->currentText();
+      QString Avis=ui->texteavis_2->text();
+
+             QItemSelectionModel *select = ui->tableavis->selectionModel();
+            if (!select->hasSelection()){
+                 msg.setText("Please select something");
+
+                 msg.setIcon(msg.Critical);
+                 msg.exec();
+                 return;
+            }
+
+    avis A( ref_avis, type_avis, Avis);
+    if( type_avis.isEmpty() || Avis.isEmpty())
+                         {
+                             QMessageBox::critical(0,qApp->tr("erreur"),qApp->tr("veillez remplir les champs vides Pour continuez."),QMessageBox::Cancel);
+                         }
+        bool test=A.modifier(ref_avis);
+
+
+        if (test)
+                {
+
+                QMessageBox:: information(nullptr, QObject::tr("OK"),
+                                                   QObject::tr("Modifier un Client effectué\n"
+                                                               "click cancel to exit."),QMessageBox::Cancel);
+                QSqlQueryModel * model= new QSqlQueryModel;
+                model->setQuery("SELECT CIN FROM CLIENT");
+
+                }
+            else
+               { QMessageBox::critical(nullptr, QObject::tr("Not OK"),
+                                      QObject::tr("Ajout non effectué.\n"
+                                                  "click Cancel to exit."),QMessageBox::Cancel);}
 }
 
 
@@ -326,3 +382,28 @@ void MainWindow::on_pushButtonModifieravis_clicked()
 
 
 
+
+void MainWindow::on_cin_comboBox2_activated(const QString &arg1)
+{
+    /*QSqlQueryModel * model= new QSqlQueryModel;
+        model->setQuery("SELECT MATRICULE_FISCALE FROM client_fidele");*/
+
+        int MAT=ui->cin_comboBox2->currentText().toInt();
+
+        QSqlQuery query;
+        query.prepare("SELECT * FROM CLIENT WHERE CIN = :CIN");
+        query.bindValue(":CIN",MAT);
+        query.exec();
+       // ui->tabWidget->setCurrentIndex(12);
+       // ui->comboBox_ref_modifier_2->setModel(model);
+        while(query.next()){
+            //ui->lineEdit_matricule_11->setText(query.value(0).toString());
+            ui->REF_2->setText(query.value(1).toString());
+            ui->Nom_2->setText(query.value(2).toString());
+            ui->Prenom_2->setText(query.value(3).toString());
+            ui->AdresseEmail_2->setText(query.value(4).toString());
+             ui->Numtel_2->setText(query.value(5).toString());
+             ui->comboBox_2->setCurrentText(query.value(6).toString());
+
+    }
+}
