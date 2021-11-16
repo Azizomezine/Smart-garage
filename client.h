@@ -30,9 +30,10 @@ void  setADRESSE_Email( QString);
     bool modifier(int);
 QSqlQueryModel * rechercher(QString );
  QSqlQueryModel * tri();
+ QSqlQueryModel * trid();
 private:
     QString NOM,PRENOM,ADRESSE_Email,SERVICE,REF;
-    int CIN,Numtel;
+ int CIN,Numtel;
 };
 
 #endif // CLIENT_H

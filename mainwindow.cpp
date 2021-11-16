@@ -6,17 +6,20 @@
 #include "QrCode.hpp"
 #include "client.h"
 #include "avis.h"
+#include "carte.h"
 #include <QtWidgets>
 #include <QObject>
 #include <QSqlQuery>
 #include <QtWidgets>
 #include <QHeaderView>
+#include "QCustomPlot.h"
 using namespace qrcodegen;
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    MainWindow::makePlot();
     ui->tab_client->setModel(Etmp.afficher());
 ui->tableavis->setModel(at.afficher());
 ui->cin->setValidator(new QIntValidator(0,99999999,this));
@@ -77,6 +80,26 @@ if (test)
         QMessageBox:: information(nullptr, QObject::tr("OK"),
                                            QObject::tr("Ajout Client effectué\n"
                                                        "click cancel to exit."),QMessageBox::Cancel);
+      int cin=ui->cin->text().toInt();
+      int pt=80;
+      if(SERVICE=="VIDANGE")
+      {
+          pt=50;
+      }
+      else if(SERVICE=="NETOYAGE")
+      {
+         pt=30;
+      }
+       Carte Cr(cin,pt);
+    bool     test1=Cr.ajouterCarte();
+        QMessageBox msgBox;
+
+        if(test1)
+        {
+            QMessageBox:: information(nullptr, QObject::tr("OK"),
+                                               QObject::tr("Ajout carte Client effectué\n"
+                                                           "click cancel to exit."),QMessageBox::Cancel);
+        }
          ui->cin->clear();
          ui->REF->clear();
          ui->Prenom->clear();
@@ -89,6 +112,7 @@ if (test)
         QMessageBox::critical(nullptr, QObject::tr("Not OK"),
                               QObject::tr("Client exist deja.\n"
                                           "click Cancel to exit."),QMessageBox::Cancel);
+
     }}
 
 void MainWindow::on_pushButtonSupprimer_clicked()
@@ -184,13 +208,13 @@ void MainWindow::on_pushButtonRechercher_clicked()
 
 }
 
-void MainWindow::on_pushButtontrier_clicked()
+void MainWindow::on_Button_dcroissant_clicked()
 {
-    Client C;
-
-           QString REF=ui->REF2->text();
-
-           ui->tab_client->setModel(C.tri());
+  ui->tab_client->setModel(Etmp.tri());
+}
+void MainWindow::on_Button_croissant_clicked()
+{
+    ui->tab_client->setModel(Etmp.trid());
 }
 
 void MainWindow::on_pushButtonClient_clicked()
@@ -200,7 +224,7 @@ void MainWindow::on_pushButtonClient_clicked()
 
 void MainWindow::on_pushButtonAvis_clicked()
 {
-    ui->stackedWidget->setCurrentIndex(2);
+    ui->stackedWidget->setCurrentIndex(3);
 }
 
 void MainWindow::on_pushButton_clicked()
@@ -351,11 +375,12 @@ QMessageBox msg;
                  return;
             }
 
-    avis A( ref_avis, type_avis, Avis);
     if( type_avis.isEmpty() || Avis.isEmpty())
                          {
                              QMessageBox::critical(0,qApp->tr("erreur"),qApp->tr("veillez remplir les champs vides Pour continuez."),QMessageBox::Cancel);
                          }
+
+    avis A( ref_avis, type_avis, Avis);
         bool test=A.modifier(ref_avis);
 
 
@@ -407,3 +432,103 @@ void MainWindow::on_cin_comboBox2_activated(const QString &arg1)
 
     }
 }
+
+void MainWindow::on_pushButton_3_clicked()
+{
+     ui->stackedWidget->setCurrentIndex(2);
+}
+
+void MainWindow::on_pushButton_4_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(1);
+}
+void MainWindow::makePlot()
+{
+    //set-up
+       QLinearGradient gradient(0, 0, 0, 400);
+       gradient.setColorAt(0, QColor(90, 90, 90));
+       gradient.setColorAt(0.38, QColor(105, 105, 105));
+       gradient.setColorAt(1, QColor(70, 70, 70));
+       ui->customPlot->setBackground(QBrush(gradient));
+       QCPBars *regen = new QCPBars( ui->customPlot->xAxis,  ui->customPlot->yAxis);
+       regen->setAntialiased(false);
+       regen->setStackingGap(1);
+       regen->setName("nbr_client");
+       regen->setPen(QPen(QColor(255, 170, 0).lighter(130)));
+       regen->setBrush(QColor(255, 170, 0));
+
+       //x axis
+       QVector<double> ticks;
+       QVector<QString> labels;
+       ticks << 1 << 2 << 3;
+       labels << "VIDANGE" << "NETOYAGE" << "NETTOYAGE/VIDANGE" ;
+       QSharedPointer<QCPAxisTickerText> textTicker(new QCPAxisTickerText);
+       textTicker->addTicks(ticks, labels);
+
+       ui->customPlot->xAxis->setTicker(textTicker);
+        ui->customPlot->xAxis->setTickLabelRotation(60);
+        ui->customPlot->xAxis->setSubTicks(false);
+        ui->customPlot->xAxis->setTickLength(0, 4);
+       ui->customPlot->xAxis->setRange(0, 8);
+       ui->customPlot->xAxis->setBasePen(QPen(Qt::white));
+       ui->customPlot->xAxis->setTickPen(QPen(Qt::white));
+       ui->customPlot->xAxis->grid()->setVisible(true);
+        ui->customPlot->xAxis->grid()->setPen(QPen(QColor(130, 130, 130), 0, Qt::DotLine));
+        ui->customPlot->xAxis->setTickLabelColor(Qt::white);
+        ui->customPlot->xAxis->setLabelColor(Qt::white);
+
+       //y axis
+
+        ui->customPlot->yAxis->setRange(0,30);//intervale de x
+        ui->customPlot->yAxis->setPadding(5); // a bit more space to the left border
+        ui->customPlot->yAxis->setBasePen(QPen(Qt::white));
+       ui->customPlot->yAxis->setTickPen(QPen(Qt::white));
+       ui->customPlot->yAxis->setSubTickPen(QPen(Qt::white));
+      ui->customPlot->yAxis->grid()->setSubGridVisible(true);
+      ui->customPlot->yAxis->setTickLabelColor(Qt::white);
+      ui->customPlot->yAxis->setLabelColor(Qt::white);
+       ui->customPlot->yAxis->grid()->setPen(QPen(QColor(130, 130, 130), 0, Qt::SolidLine));
+       ui->customPlot->yAxis->grid()->setSubGridPen(QPen(QColor(130, 130, 130), 0, Qt::DotLine));
+
+   //data
+       QVector<double> regenData;
+
+       QSqlQuery query1("select SUM(nbr_client)from CLIENT where SERVICE='VIDANGE'  ");
+
+       while (query1.next()) {
+                   int  nbr_faute=0;
+                    int nbr_fauteee=0;
+                               int  nbr_fautee = query1.value(0).toInt();
+
+                 QSqlQuery query2("select SUM(nbr_client)from CLIENT where TYPE='NETOYAGE'");
+                 while (query2.next()) {
+
+                                         nbr_faute = query2.value(0).toInt();
+                                         QSqlQuery query3("select SUM(QUANTITE)from CLIENT where TYPE='NETTOYAGE/VIDANGE'");
+                                         while (query3.next()) {
+                                             nbr_fauteee = query3.value(0).toInt();
+                                             break;
+                                         }
+                                        }
+                 regenData<< nbr_fautee << nbr_faute<< nbr_fauteee;
+                               break;
+                              }
+
+       regen->setData(ticks, regenData);
+
+       //legend
+
+
+        ui->customPlot->legend->setVisible(true);
+        ui->customPlot->axisRect()->insetLayout()->setInsetAlignment(0, Qt::AlignTop|Qt::AlignHCenter);
+       ui->customPlot->legend->setBrush(QColor(255, 255, 255, 100));
+       ui->customPlot->legend->setBorderPen(Qt::NoPen);
+
+       QFont legendFont = font();
+       legendFont.setPointSize(10);
+       ui->customPlot->legend->setFont(legendFont);
+       ui->customPlot->setInteractions(QCP::iRangeDrag | QCP::iRangeZoom);
+}
+
+
+

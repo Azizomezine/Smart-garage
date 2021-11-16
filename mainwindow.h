@@ -6,6 +6,7 @@
 #include "client.h"
 #include "avis.h"
 #include "QrCode.hpp"
+#include "carte.h"
 namespace Ui {
 class MainWindow;
 }
@@ -29,8 +30,6 @@ private slots:
     void on_pushButtonActualiser_clicked();
 
     void on_pushButtonRechercher_clicked();
-
-    void on_pushButtontrier_clicked();
 
     void on_pushButtonClient_clicked();
 
@@ -61,6 +60,17 @@ private slots:
 
 
   void on_cin_comboBox2_activated(const QString &arg1);
+
+  void on_pushButton_3_clicked();
+
+
+
+  void on_pushButton_4_clicked();
+void makePlot();
+
+void on_Button_croissant_clicked();
+
+void on_Button_dcroissant_clicked();
 
 private:
     Ui::MainWindow *ui;

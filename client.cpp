@@ -102,3 +102,13 @@ QSqlQueryModel * Client::tri()
         model->setQuery("SELECT * FROM client ORDER BY REF");
         return model;
 }
+QSqlQueryModel * Client::trid(){
+
+   /*QSqlQuery *q = new QSqlQuery();*/
+   QSqlQueryModel *model = new QSqlQueryModel();
+    model->setQuery("SELECT * FROM client ORDER BY REF DESC");
+   /*q->exec();
+   model->setQuery(*q);*/
+
+   return model;
+}

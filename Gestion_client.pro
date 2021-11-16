@@ -6,7 +6,7 @@
 
 QT       += core gui sql
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets widgets printsupport
 
 TARGET = Atelier_Connexion
 TEMPLATE = app
@@ -27,17 +27,21 @@ CONFIG += c++11
 SOURCES += \
     QrCode.cpp \
     avis.cpp \
+    carte.cpp \
     client.cpp \
         main.cpp \
         mainwindow.cpp \
-    connection.cpp
+    connection.cpp \
+    qcustomplot.cpp
 
 HEADERS += \
     QrCode.hpp \
     avis.h \
+    carte.h \
     client.h \
         mainwindow.h \
-    connection.h
+    connection.h \
+    qcustomplot.h
 
 FORMS += \
     mainwindow.ui
