@@ -22,11 +22,11 @@ public:
     bool supprimerCarte(int);
     bool modifierCarte(int);
     QSqlQueryModel* trierCarte();
-    QSqlQueryModel* rechercherCarte(int);
+   QSqlQueryModel * rechercherclient(int cinc);
     QSqlQueryModel* statistique();
 private:
     int cinc,pts;
-    QString expire;
+
 };
 
 #endif // CARTE_H

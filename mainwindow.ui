@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1205</width>
-    <height>686</height>
+    <width>1194</width>
+    <height>679</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -20,7 +20,7 @@
    <widget class="QStackedWidget" name="stackedWidget">
     <property name="geometry">
      <rect>
-      <x>40</x>
+      <x>50</x>
       <y>10</y>
       <width>1111</width>
       <height>591</height>
@@ -30,7 +30,7 @@
      <string notr="true">background-image: url(:/im/Capture.PNG);</string>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>3</number>
     </property>
     <widget class="QWidget" name="page_9">
      <widget class="QPushButton" name="pushButtonAvis">
@@ -338,6 +338,27 @@ font-style:italic;
         </property>
         <property name="text">
          <string>Service</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButtonajouter">
+        <property name="geometry">
+         <rect>
+          <x>680</x>
+          <y>180</y>
+          <width>251</width>
+          <height>171</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton{
+color: rgb(0, 170, 255);
+font-size:15px;
+font-style:italic;
+	
+}</string>
+        </property>
+        <property name="text">
+         <string>Ajouter Pour client existant</string>
         </property>
        </widget>
       </widget>
@@ -666,16 +687,16 @@ font-style:italic;
        <widget class="QPushButton" name="pushButtonRechercher">
         <property name="geometry">
          <rect>
-          <x>90</x>
-          <y>380</y>
-          <width>111</width>
+          <x>20</x>
+          <y>330</y>
+          <width>651</width>
           <height>31</height>
          </rect>
         </property>
         <property name="styleSheet">
          <string notr="true">
 color: rgb(0, 170, 255);
-font-size:15px;
+font-size:20px;
 font-style:italic;</string>
         </property>
         <property name="text">
@@ -685,9 +706,9 @@ font-style:italic;</string>
        <widget class="QLineEdit" name="REF2">
         <property name="geometry">
          <rect>
-          <x>240</x>
-          <y>380</y>
-          <width>113</width>
+          <x>20</x>
+          <y>360</y>
+          <width>651</width>
           <height>20</height>
          </rect>
         </property>
@@ -696,10 +717,15 @@ font-style:italic;</string>
         <property name="geometry">
          <rect>
           <x>690</x>
-          <y>370</y>
-          <width>181</width>
-          <height>23</height>
+          <y>280</y>
+          <width>221</width>
+          <height>71</height>
          </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">color: rgb(0, 170, 255);
+font-size:15px;
+font-style:italic;</string>
         </property>
         <property name="text">
          <string>Générer QR Code</string>
@@ -712,7 +738,7 @@ font-style:italic;</string>
         <property name="geometry">
          <rect>
           <x>690</x>
-          <y>150</y>
+          <y>80</y>
           <width>200</width>
           <height>200</height>
          </rect>
@@ -742,8 +768,8 @@ font-style:italic;</string>
        <widget class="QPushButton" name="pushButtonActualiser">
         <property name="geometry">
          <rect>
-          <x>730</x>
-          <y>20</y>
+          <x>960</x>
+          <y>10</y>
           <width>101</width>
           <height>41</height>
          </rect>
@@ -758,27 +784,37 @@ font-style:italic;</string>
          <string>Actualiser</string>
         </property>
        </widget>
-       <widget class="QPushButton" name="pushButton_3">
+       <widget class="QPushButton" name="stat">
         <property name="geometry">
          <rect>
-          <x>730</x>
-          <y>70</y>
-          <width>101</width>
+          <x>920</x>
+          <y>410</y>
+          <width>131</width>
           <height>51</height>
          </rect>
         </property>
+        <property name="styleSheet">
+         <string notr="true">color: rgb(0, 170, 255);
+font-size:15px;
+font-style:italic;</string>
+        </property>
         <property name="text">
-         <string>Statistique</string>
+         <string>statistique</string>
         </property>
        </widget>
        <widget class="QGroupBox" name="groupBox">
         <property name="geometry">
          <rect>
-          <x>390</x>
-          <y>350</y>
-          <width>241</width>
-          <height>111</height>
+          <x>680</x>
+          <y>360</y>
+          <width>231</width>
+          <height>91</height>
          </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">color: rgb(0, 170, 255);
+font-size:15px;
+font-style:italic;</string>
         </property>
         <property name="title">
          <string>Trier REF par ordre:</string>
@@ -786,9 +822,9 @@ font-style:italic;</string>
         <widget class="QRadioButton" name="Button_croissant">
          <property name="geometry">
           <rect>
-           <x>10</x>
-           <y>40</y>
-           <width>161</width>
+           <x>20</x>
+           <y>60</y>
+           <width>191</width>
            <height>20</height>
           </rect>
          </property>
@@ -799,9 +835,9 @@ font-style:italic;</string>
         <widget class="QRadioButton" name="Button_dcroissant">
          <property name="geometry">
           <rect>
-           <x>10</x>
-           <y>80</y>
-           <width>171</width>
+           <x>20</x>
+           <y>30</y>
+           <width>191</width>
            <height>20</height>
           </rect>
          </property>
@@ -809,6 +845,25 @@ font-style:italic;</string>
           <string>Alphabétique Décroissant</string>
          </property>
         </widget>
+       </widget>
+       <widget class="QPushButton" name="carte_client">
+        <property name="geometry">
+         <rect>
+          <x>714</x>
+          <y>20</y>
+          <width>151</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">
+color: rgb(0, 170, 255);
+font-size:15px;
+font-style:italic;</string>
+        </property>
+        <property name="text">
+         <string>Afficher carte client</string>
+        </property>
        </widget>
       </widget>
      </widget>
@@ -827,16 +882,6 @@ font-style:italic;</string>
      </widget>
     </widget>
     <widget class="QWidget" name="page">
-     <widget class="QCustomPlot" name="customPlot" native="true">
-      <property name="geometry">
-       <rect>
-        <x>210</x>
-        <y>50</y>
-        <width>481</width>
-        <height>331</height>
-       </rect>
-      </property>
-     </widget>
      <widget class="QPushButton" name="pushButton_4">
       <property name="geometry">
        <rect>
@@ -850,13 +895,163 @@ font-style:italic;</string>
        <string>return</string>
       </property>
      </widget>
+     <widget class="QTableView" name="tab_carte">
+      <property name="geometry">
+       <rect>
+        <x>100</x>
+        <y>90</y>
+        <width>351</width>
+        <height>211</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="Actualiser">
+      <property name="geometry">
+       <rect>
+        <x>514</x>
+        <y>80</y>
+        <width>131</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Actualiser</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="page_2">
+     <widget class="QPushButton" name="pushButtonreturn">
+      <property name="geometry">
+       <rect>
+        <x>960</x>
+        <y>30</y>
+        <width>75</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>return</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_19">
+      <property name="geometry">
+       <rect>
+        <x>116</x>
+        <y>180</y>
+        <width>101</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">
+color: rgb(0, 170, 255);
+font-size:15px;
+font-style:italic;
+	
+</string>
+      </property>
+      <property name="text">
+       <string>CIN</string>
+      </property>
+     </widget>
+     <widget class="QComboBox" name="cin_comboBox3">
+      <property name="geometry">
+       <rect>
+        <x>250</x>
+        <y>180</y>
+        <width>131</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <item>
+       <property name="text">
+        <string/>
+       </property>
+      </item>
+     </widget>
+     <widget class="QLabel" name="label_20">
+      <property name="geometry">
+       <rect>
+        <x>100</x>
+        <y>250</y>
+        <width>71</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">
+color: rgb(0, 170, 255);
+font-size:15px;
+font-style:italic;
+	
+</string>
+      </property>
+      <property name="text">
+       <string>Service</string>
+      </property>
+     </widget>
+     <widget class="QComboBox" name="comboBox_3">
+      <property name="geometry">
+       <rect>
+        <x>250</x>
+        <y>250</y>
+        <width>141</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <underline>true</underline>
+       </font>
+      </property>
+      <item>
+       <property name="text">
+        <string/>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>VIDANGE</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>NETOYAGE</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>NETTOYAGE/VIDANGE</string>
+       </property>
+      </item>
+     </widget>
+     <widget class="QPushButton" name="ajouter_pts">
+      <property name="geometry">
+       <rect>
+        <x>240</x>
+        <y>310</y>
+        <width>151</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">
+color: rgb(0, 170, 255);
+font-size:15px;
+font-style:italic;
+	</string>
+      </property>
+      <property name="text">
+       <string>Ajouter </string>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="page_8">
      <widget class="QTabWidget" name="tabWidget">
       <property name="geometry">
        <rect>
-        <x>20</x>
-        <y>30</y>
+        <x>0</x>
+        <y>40</y>
         <width>1041</width>
         <height>511</height>
        </rect>
@@ -868,7 +1063,7 @@ font-style:italic;</string>
        <enum>QTabWidget::Triangular</enum>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="tab_4">
        <attribute name="title">
@@ -1012,7 +1207,7 @@ font-style:italic;</string>
         </item>
         <item>
          <property name="text">
-          <string>médiocre</string>
+          <string>mediocre</string>
          </property>
         </item>
        </widget>
@@ -1026,7 +1221,7 @@ font-style:italic;</string>
          <rect>
           <x>70</x>
           <y>70</y>
-          <width>441</width>
+          <width>491</width>
           <height>281</height>
          </rect>
         </property>
@@ -1034,8 +1229,8 @@ font-style:italic;</string>
        <widget class="QPushButton" name="pushButtonActualiser_2">
         <property name="geometry">
          <rect>
-          <x>550</x>
-          <y>70</y>
+          <x>910</x>
+          <y>10</y>
           <width>101</width>
           <height>41</height>
          </rect>
@@ -1059,17 +1254,23 @@ font-style:italic;</string>
           <height>61</height>
          </rect>
         </property>
+        <property name="styleSheet">
+         <string notr="true">
+color: rgb(0, 170, 255);
+font-size:15px;
+font-style:italic;</string>
+        </property>
         <property name="text">
          <string>Supprimer</string>
         </property>
        </widget>
-       <widget class="QPushButton" name="pushButtonModifieravis">
+       <widget class="QGroupBox" name="groupBox_2">
         <property name="geometry">
          <rect>
-          <x>530</x>
-          <y>150</y>
-          <width>121</width>
-          <height>61</height>
+          <x>580</x>
+          <y>110</y>
+          <width>421</width>
+          <height>261</height>
          </rect>
         </property>
         <property name="styleSheet">
@@ -1078,98 +1279,130 @@ color: rgb(0, 170, 255);
 font-size:15px;
 font-style:italic;</string>
         </property>
-        <property name="text">
-         <string>Modifier</string>
+        <property name="title">
+         <string>MODIFIER AVIS</string>
         </property>
-       </widget>
-       <widget class="QLineEdit" name="lineEdit_2">
-        <property name="geometry">
-         <rect>
-          <x>680</x>
-          <y>150</y>
-          <width>113</width>
-          <height>20</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">
-color: rgb(0, 170, 255);
-font-size:15px;
-font-style:italic;</string>
-        </property>
-        <property name="text">
-         <string>TYPE AVIS</string>
-        </property>
-       </widget>
-       <widget class="QComboBox" name="typecomboBox_2">
-        <property name="geometry">
-         <rect>
-          <x>820</x>
-          <y>150</y>
-          <width>141</width>
-          <height>22</height>
-         </rect>
-        </property>
-        <item>
-         <property name="text">
-          <string/>
+        <widget class="QLabel" name="label_16">
+         <property name="geometry">
+          <rect>
+           <x>40</x>
+           <y>150</y>
+           <width>141</width>
+           <height>31</height>
+          </rect>
          </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Parfait</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>satisfaisant</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Normal</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>insatisfaisant</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>médiocre</string>
-         </property>
-        </item>
-       </widget>
-       <widget class="QLabel" name="label_16">
-        <property name="geometry">
-         <rect>
-          <x>690</x>
-          <y>200</y>
-          <width>141</width>
-          <height>31</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">
+         <property name="styleSheet">
+          <string notr="true">
 color: rgb(0, 170, 255);
 font-size:15px;
 font-style:italic;
 	
 </string>
-        </property>
-        <property name="text">
-         <string>AVIS:</string>
-        </property>
+         </property>
+         <property name="text">
+          <string>AVIS:</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEdit_2">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>50</y>
+           <width>113</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">
+color: rgb(0, 170, 255);
+font-size:15px;
+font-style:italic;</string>
+         </property>
+         <property name="text">
+          <string>TYPE AVIS</string>
+         </property>
+        </widget>
+        <widget class="QComboBox" name="typecomboBox_2">
+         <property name="geometry">
+          <rect>
+           <x>180</x>
+           <y>50</y>
+           <width>141</width>
+           <height>22</height>
+          </rect>
+         </property>
+         <item>
+          <property name="text">
+           <string/>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Parfait</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>satisfaisant</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Normal</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>insatisfaisant</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>médiocre</string>
+          </property>
+         </item>
+        </widget>
+        <widget class="QLineEdit" name="texteavis_2">
+         <property name="geometry">
+          <rect>
+           <x>140</x>
+           <y>100</y>
+           <width>181</width>
+           <height>101</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="pushButtonModifieravis">
+         <property name="geometry">
+          <rect>
+           <x>320</x>
+           <y>210</y>
+           <width>71</width>
+           <height>41</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">
+color: rgb(0, 170, 255);
+font-size:15px;
+font-style:italic;</string>
+         </property>
+         <property name="text">
+          <string>Modifier</string>
+         </property>
+        </widget>
        </widget>
-       <widget class="QLineEdit" name="texteavis_2">
+       <widget class="QPushButton" name="stat_avis">
         <property name="geometry">
          <rect>
-          <x>830</x>
-          <y>190</y>
-          <width>181</width>
-          <height>101</height>
+          <x>724</x>
+          <y>10</y>
+          <width>91</width>
+          <height>31</height>
          </rect>
+        </property>
+        <property name="text">
+         <string>Statistique</string>
         </property>
        </widget>
       </widget>
@@ -1195,7 +1428,7 @@ font-style:italic;
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1205</width>
+     <width>1194</width>
      <height>22</height>
     </rect>
    </property>
@@ -1222,14 +1455,6 @@ font-style:italic;
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <customwidgets>
-  <customwidget>
-   <class>QCustomPlot</class>
-   <extends>QWidget</extends>
-   <header>qcustomplot.h</header>
-   <container>1</container>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>

@@ -12,16 +12,21 @@
 #include <QSqlQuery>
 #include <QtWidgets>
 #include <QHeaderView>
-#include "QCustomPlot.h"
+#include <QtCharts>
+#include <QChartView>
+#include <QLineSeries>
+QT_CHARTS_USE_NAMESPACE
+using namespace QtCharts;
 using namespace qrcodegen;
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    MainWindow::makePlot();
     ui->tab_client->setModel(Etmp.afficher());
+    ui->tab_carte->setModel(ct.afficherCarte());
 ui->tableavis->setModel(at.afficher());
+ ui->tab_carte->setModel(ct.rechercherclient( cinc));
 ui->cin->setValidator(new QIntValidator(0,99999999,this));
 ui->Numtel->setValidator(new QIntValidator(0,99999999,this));
 ui->Numtel_2->setValidator(new QIntValidator(0,99999999,this));
@@ -60,7 +65,7 @@ void MainWindow::on_pushButtonAjouter_clicked()
                          {
                              QMessageBox::critical(0,qApp->tr("erreur"),qApp->tr("veillez remplir les champs vides Pour continuez."),QMessageBox::Cancel);
                          }
-   else if ((CIN<10000000)||(CIN>99999999) )
+   /*else if ((CIN<10000000)||(CIN>99999999) )
            {
 
         QMessageBox::critical(0,qApp->tr("erreur"),qApp->tr("Echec de l'ajout veuillez verifier le CIN(8 chiffres)"),QMessageBox::Cancel);
@@ -69,7 +74,7 @@ void MainWindow::on_pushButtonAjouter_clicked()
            {
 
         QMessageBox::critical(0,qApp->tr("erreur"),qApp->tr("Echec de l'ajout veuillez verifier le num tel(8 chiffres)"),QMessageBox::Cancel);
-    }
+    }*/
 
     else
 
@@ -81,7 +86,7 @@ if (test)
                                            QObject::tr("Ajout Client effectué\n"
                                                        "click cancel to exit."),QMessageBox::Cancel);
       int cin=ui->cin->text().toInt();
-      int pt=80;
+      int pt=100;
       if(SERVICE=="VIDANGE")
       {
           pt=50;
@@ -114,6 +119,43 @@ if (test)
                                           "click Cancel to exit."),QMessageBox::Cancel);
 
     }}
+void MainWindow::on_ajouter_pts_clicked()
+{
+    QString SERVICE=ui->comboBox_3->currentText();
+    if(SERVICE.isEmpty())
+                         {
+                             QMessageBox::critical(0,qApp->tr("erreur"),qApp->tr("veillez remplir les champs vides Pour continuez."),QMessageBox::Cancel);
+                         }
+
+      int cin=ui->cin_comboBox3->currentText().toInt();
+       int pt;
+       QSqlQuery qry;
+      qry.prepare("SELECT PTS FROM CARTE");
+       while(qry.next()){ // iterator via query.next() pour acceder au contenu
+     pt=qry.value(1).toInt();
+      qDebug() << qry.value(1).toInt();
+       }
+
+      if(SERVICE=="VIDANGE")
+      {
+          pt+=50;
+      }
+      else if(SERVICE=="NETOYAGE")
+      {
+         pt+=30;
+      }
+      else  if(SERVICE=="NETTOYAGE/VIDANGE")
+      {pt+=100; }
+       Carte Cr(cin,pt);
+    bool     test1=Cr.modifierCarte(cin);
+
+        if(test1)
+        {
+            QMessageBox:: information(nullptr, QObject::tr("OK"),
+                                               QObject::tr("Ajout carte Client effectué\n"
+                                                           "click cancel to exit."),QMessageBox::Cancel);
+        }
+}
 
 void MainWindow::on_pushButtonSupprimer_clicked()
 {
@@ -127,21 +169,31 @@ void MainWindow::on_pushButtonSupprimer_clicked()
     else {
 
     bool test=Etmp.supprimer(cin);
-
-
+   bool test1=ct.supprimerCarte(cin);
     if (test)
             {
 
         /* ui->tab_client->setModel(Etmp.rechercher(""));
           ui->tab_client->clearSelection();*/
+
             QMessageBox:: information(nullptr, QObject::tr("OK"),
                                                QObject::tr("Suppression d'un client avec succes\n"
                                                            "click cancel to exit."),QMessageBox::Cancel);
+
+            if (test1)
+            {
+                QMessageBox:: information(nullptr, QObject::tr("OK"),
+                                                   QObject::tr("Suppression du carte client client avec succes\n"
+                                                               "click cancel to exit."),QMessageBox::Cancel);
+            }
 
             QSqlQueryModel * model= new QSqlQueryModel;
                    model->setQuery("SELECT CIN FROM client");
 
                    ui->cin_comboBox->setModel(model);
+
+
+
 
             }
         else
@@ -170,6 +222,25 @@ else {
     if (test)
             {
 
+        int pt=100;
+        if(SERVICE=="VIDANGE")
+        {
+            pt=50;
+        }
+        else if(SERVICE=="NETOYAGE")
+        {
+           pt=30;
+        }
+         Carte Cr(CIN,pt);
+      bool     test1=Cr.modifierCarte(CIN);
+
+
+          if(test1)
+          {
+              QMessageBox:: information(nullptr, QObject::tr("OK"),
+                                                 QObject::tr("Modification  carte Client effectué\n"
+                                                             "click cancel to exit."),QMessageBox::Cancel);
+          }
             QMessageBox:: information(nullptr, QObject::tr("OK"),
                                                QObject::tr("Modifier un Client effectué\n"
                                                            "click cancel to exit."),QMessageBox::Cancel);
@@ -192,6 +263,7 @@ void MainWindow::on_pushButtonActualiser_clicked()
                       model->setQuery("SELECT CIN FROM client");
                   ui->cin_comboBox2->setModel(model);
                       ui->cin_comboBox->setModel(model);
+                      ui->cin_comboBox3->setModel(model);
 }
 
 
@@ -283,16 +355,17 @@ void MainWindow::on_qrcodegen_clicked()
                msg.exec();
                return;
           }
-    int tabeq=ui->tab_client->currentIndex().row();
-           QVariant idd=ui->tab_client->model()->data(ui->tab_client->model()->index(tabeq,0));
-           QString id= idd.toString();
-           QSqlQuery qry;
-           qry.prepare("select * from CLIENT where CIN=:id");
-           qry.bindValue(":id",id);
-           qry.exec();
+    int tabeq=ui->tab_client->currentIndex().row();//selectionner dons le tab client ligne
+           QVariant idd=ui->tab_client->model()->data(ui->tab_client->model()->index(tabeq,0));//selectionne le cin exactement
+           QString id= idd.toString();//convertir a une chaine
+           QSqlQuery qry;//navigating and retrieving data from SQL queries which are executed on a QSqlDatabase.
+
+           qry.prepare("select * from CLIENT where CIN=:id");//Prepares the SQL query  for execution. Returns true or false
+           qry.bindValue(":id",id);//prendre valeur id et mettre dans table client
+           qry.exec();//Executes a previously prepared SQL query
               QString  NOM,PRENOM,ADRESSE_Email,REF,NUMTEL,SERVICE,ide;
 
-           while(qry.next()){
+           while(qry.next()){//prend des variable de la base de donnes
                REF=qry.value(1).toString();
                NOM=qry.value(2).toString();
                PRENOM=qry.value(3).toString();
@@ -301,7 +374,7 @@ void MainWindow::on_qrcodegen_clicked()
                SERVICE=qry.value(6).toString();
            }
            ide=QString(id);
-                  ide="CIN:"+ide+"REF:"+REF+"NOM:"+NOM+"PRENOM:"+PRENOM+"ADRESSE_Email:"+ADRESSE_Email+"Numtel:"+NUMTEL+"SERVICE:"+SERVICE;
+                  ide="CIN:"+ide+"REF:"+REF+"NOM:"+NOM+"PRENOM:"+PRENOM+"ADRESSE_Email:"+ADRESSE_Email+"Numtel:"+NUMTEL+"SERVICE:"+SERVICE;//pendre la chaine a code
            QrCode qr = QrCode::encodeText(ide.toUtf8().constData(), QrCode::Ecc::HIGH);
 
            // Read the black & white pixels
@@ -343,7 +416,7 @@ void MainWindow::on_pushButtonSupprimer_2_clicked()
 
               if(at.supprimer(ref))
               { //Actualiser
-                  ui->tab_client->setModel(at.afficher());
+                  ui->tableavis->setModel(at.afficher());
                   QMessageBox:: information(nullptr, QObject::tr("OK"),
                                                      QObject::tr("Suppression effectué\n"
                                                                  "click cancel to exit."),QMessageBox::Cancel);
@@ -362,19 +435,20 @@ void MainWindow::on_pushButtonModifieravis_clicked()
 
 QMessageBox msg;
 
-  QString ref_avis=ui->Ref_avis->text();
+
      QString type_avis=ui->typecomboBox_2->currentText();
       QString Avis=ui->texteavis_2->text();
 
-             QItemSelectionModel *select = ui->tableavis->selectionModel();
-            if (!select->hasSelection()){
-                 msg.setText("Please select something");
 
-                 msg.setIcon(msg.Critical);
-                 msg.exec();
-                 return;
-            }
+      QItemSelectionModel *select = ui->tableavis->selectionModel();
+     if (!select->hasSelection()){
+          msg.setText("Please select something");
 
+          msg.setIcon(msg.Critical);
+          msg.exec();
+          return;
+     }
+QString ref_avis =select->selectedRows(0).value(0).data().toString();
     if( type_avis.isEmpty() || Avis.isEmpty())
                          {
                              QMessageBox::critical(0,qApp->tr("erreur"),qApp->tr("veillez remplir les champs vides Pour continuez."),QMessageBox::Cancel);
@@ -388,15 +462,16 @@ QMessageBox msg;
                 {
 
                 QMessageBox:: information(nullptr, QObject::tr("OK"),
-                                                   QObject::tr("Modifier un Client effectué\n"
+                                                   QObject::tr("Modifier avis effectué\n"
                                                                "click cancel to exit."),QMessageBox::Cancel);
-                QSqlQueryModel * model= new QSqlQueryModel;
-                model->setQuery("SELECT CIN FROM CLIENT");
+                //Actualiser
+                                  ui->tableavis->setModel(at.afficher());
+
 
                 }
             else
                { QMessageBox::critical(nullptr, QObject::tr("Not OK"),
-                                      QObject::tr("Ajout non effectué.\n"
+                                      QObject::tr("Modifier avis non effectué.\n"
                                                   "click Cancel to exit."),QMessageBox::Cancel);}
 }
 
@@ -410,8 +485,7 @@ QMessageBox msg;
 
 void MainWindow::on_cin_comboBox2_activated(const QString &arg1)
 {
-    /*QSqlQueryModel * model= new QSqlQueryModel;
-        model->setQuery("SELECT MATRICULE_FISCALE FROM client_fidele");*/
+
 
         int MAT=ui->cin_comboBox2->currentText().toInt();
 
@@ -419,10 +493,9 @@ void MainWindow::on_cin_comboBox2_activated(const QString &arg1)
         query.prepare("SELECT * FROM CLIENT WHERE CIN = :CIN");
         query.bindValue(":CIN",MAT);
         query.exec();
-       // ui->tabWidget->setCurrentIndex(12);
-       // ui->comboBox_ref_modifier_2->setModel(model);
+
         while(query.next()){
-            //ui->lineEdit_matricule_11->setText(query.value(0).toString());
+
             ui->REF_2->setText(query.value(1).toString());
             ui->Nom_2->setText(query.value(2).toString());
             ui->Prenom_2->setText(query.value(3).toString());
@@ -433,6 +506,7 @@ void MainWindow::on_cin_comboBox2_activated(const QString &arg1)
     }
 }
 
+
 void MainWindow::on_pushButton_3_clicked()
 {
      ui->stackedWidget->setCurrentIndex(2);
@@ -442,93 +516,210 @@ void MainWindow::on_pushButton_4_clicked()
 {
     ui->stackedWidget->setCurrentIndex(1);
 }
-void MainWindow::makePlot()
+
+
+
+
+
+void MainWindow::on_stat_clicked()
 {
-    //set-up
-       QLinearGradient gradient(0, 0, 0, 400);
-       gradient.setColorAt(0, QColor(90, 90, 90));
-       gradient.setColorAt(0.38, QColor(105, 105, 105));
-       gradient.setColorAt(1, QColor(70, 70, 70));
-       ui->customPlot->setBackground(QBrush(gradient));
-       QCPBars *regen = new QCPBars( ui->customPlot->xAxis,  ui->customPlot->yAxis);
-       regen->setAntialiased(false);
-       regen->setStackingGap(1);
-       regen->setName("nbr_client");
-       regen->setPen(QPen(QColor(255, 170, 0).lighter(130)));
-       regen->setBrush(QColor(255, 170, 0));
+    QSqlQueryModel * model= new QSqlQueryModel();
 
-       //x axis
-       QVector<double> ticks;
-       QVector<QString> labels;
-       ticks << 1 << 2 << 3;
-       labels << "VIDANGE" << "NETOYAGE" << "NETTOYAGE/VIDANGE" ;
-       QSharedPointer<QCPAxisTickerText> textTicker(new QCPAxisTickerText);
-       textTicker->addTicks(ticks, labels);
+      model->setQuery("select * from CLIENT where SERVICE='VIDANGE' ");
+      int number1=model->rowCount(); // calculer le nombre de client qui prendre VIDANGE
+      model->setQuery("select * from CLIENT where SERVICE='NETOYAGE' ");
+      int number2=model->rowCount();
+      model->setQuery("select * from CLIENT where SERVICE='NETTOYAGE/VIDANGE' ");
+      int number3=model->rowCount();
+      int total=number1+number2+number3;
+      QString a = QString(" VIDANGE "+QString::number((number1*100)/total,'f',2)+"%" );
+      QString b = QString("NETOYAGE "+QString::number((number2*100)/total,'f',2)+"%" );
+      QString c = QString("NETTOYAGE/VIDANGE "+QString::number((number3*100)/total,'f',2)+"%" );
+      QPieSeries *series = new QPieSeries();
+      series->append(a,number1);
+      series->append(b,number2);
+      series->append(c,number3);
+      if (number1!= 0)
+      {
+          QPieSlice *slice = series->slices().at(0);
+           if(number1>=number3 and number1>=number2)
+           {slice->setExploded();
+               slice->setPen(QPen(Qt::black,3));
+                             slice->setBrush(Qt::red);
+}
+          slice->setLabelVisible();
+          slice->setPen(QPen());
+      }
+      if (number2!=0)
+      {
+               // Add label, explode and define brush for 2nd slice
+               QPieSlice *slice1 = series->slices().at(1);
+                if(number2>=number3 and number2>=number1)
+                {slice1->setExploded();
+                    slice1->setPen(QPen(Qt::black,3));
+                                  slice1->setBrush(Qt::red);
+  }
+               slice1->setLabelVisible();
+      }
+      if(number3!=0)
+      {
+               // Add labels to rest of slices
+               QPieSlice *slice2 = series->slices().at(2);
+               if(number3>=number2 and number3>=number1)
+               {slice2->setExploded();
+                   slice2->setPen(QPen(Qt::black,3));
+                                 slice2->setBrush(Qt::red);
+ }
+               slice2->setLabelVisible();
+      }
+              // Create the chart widget
+              QChart *chart = new QChart();
+              // Add data to chart with title and hide legend
+              chart->addSeries(series);
+              chart->setTitle("Pourcentage Par SERVICE :Nombre Des CLient "+ QString::number(total));
+              //chart->legend()->hide();
+              // Used to display the chart
+              QChartView *chartView = new QChartView(chart);
+              chartView->setRenderHint(QPainter::Antialiasing);
 
-       ui->customPlot->xAxis->setTicker(textTicker);
-        ui->customPlot->xAxis->setTickLabelRotation(60);
-        ui->customPlot->xAxis->setSubTicks(false);
-        ui->customPlot->xAxis->setTickLength(0, 4);
-       ui->customPlot->xAxis->setRange(0, 8);
-       ui->customPlot->xAxis->setBasePen(QPen(Qt::white));
-       ui->customPlot->xAxis->setTickPen(QPen(Qt::white));
-       ui->customPlot->xAxis->grid()->setVisible(true);
-        ui->customPlot->xAxis->grid()->setPen(QPen(QColor(130, 130, 130), 0, Qt::DotLine));
-        ui->customPlot->xAxis->setTickLabelColor(Qt::white);
-        ui->customPlot->xAxis->setLabelColor(Qt::white);
+              chartView->resize(1000,500);
+              chartView->show();
+}
 
-       //y axis
+void MainWindow::on_carte_client_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(2);
+     ui->tab_carte->setModel(ct.afficherCarte());
+     QItemSelectionModel *select = ui->tab_client->selectionModel();
+    if (!select->hasSelection()){
+        ui->stackedWidget->setCurrentIndex(2);
+         ui->tab_carte->setModel(ct.afficherCarte());
+    }
+    else
+{
+        int CIN =select->selectedRows(0).value(0).data().toInt();
+        ui->stackedWidget->setCurrentIndex(2);
+         ui->tab_carte->setModel(ct.rechercherclient(CIN));
 
-        ui->customPlot->yAxis->setRange(0,30);//intervale de x
-        ui->customPlot->yAxis->setPadding(5); // a bit more space to the left border
-        ui->customPlot->yAxis->setBasePen(QPen(Qt::white));
-       ui->customPlot->yAxis->setTickPen(QPen(Qt::white));
-       ui->customPlot->yAxis->setSubTickPen(QPen(Qt::white));
-      ui->customPlot->yAxis->grid()->setSubGridVisible(true);
-      ui->customPlot->yAxis->setTickLabelColor(Qt::white);
-      ui->customPlot->yAxis->setLabelColor(Qt::white);
-       ui->customPlot->yAxis->grid()->setPen(QPen(QColor(130, 130, 130), 0, Qt::SolidLine));
-       ui->customPlot->yAxis->grid()->setSubGridPen(QPen(QColor(130, 130, 130), 0, Qt::DotLine));
+    }
+}
 
-   //data
-       QVector<double> regenData;
+void MainWindow::on_stat_avis_clicked()
+{
 
-       QSqlQuery query1("select SUM(nbr_client)from CLIENT where SERVICE='VIDANGE'  ");
+        //![1]
+            QBarSet *set0 = new QBarSet("Parfait");
+            QBarSet *set1 = new QBarSet("satisfaisant");
+            QBarSet *set2 = new QBarSet("Normal");
+             QBarSet *set3 = new QBarSet("insatisfaisant");
+             QBarSet *set4 = new QBarSet("médiocre");
+            int nb0=0;
+            QSqlQuery query0("select * from AVIS where TYPE_AVIS='Parfait'");// calculer le nombre de type avis=parfait
+            while(query0.next())
+            {
+                nb0++;
+            }
+            int nb1=0;
+            QSqlQuery query1("select * from AVIS where TYPE_AVIS='satisfaisant'");
+            while(query1.next())
+            {
+                nb1++;
+            }
+            int nb2=0;
+            QSqlQuery query2("select * from AVIS where TYPE_AVIS='Normal'");
+            while(query2.next())
+            {
+                nb2++;
+            }
+            int nb3=0;
+            QSqlQuery query3("select * from AVIS where TYPE_AVIS='insatisfaisant'");
+            while(query3.next())
+            {
+                nb3++;
+            }
 
-       while (query1.next()) {
-                   int  nbr_faute=0;
-                    int nbr_fauteee=0;
-                               int  nbr_fautee = query1.value(0).toInt();
-
-                 QSqlQuery query2("select SUM(nbr_client)from CLIENT where TYPE='NETOYAGE'");
-                 while (query2.next()) {
-
-                                         nbr_faute = query2.value(0).toInt();
-                                         QSqlQuery query3("select SUM(QUANTITE)from CLIENT where TYPE='NETTOYAGE/VIDANGE'");
-                                         while (query3.next()) {
-                                             nbr_fauteee = query3.value(0).toInt();
-                                             break;
-                                         }
-                                        }
-                 regenData<< nbr_fautee << nbr_faute<< nbr_fauteee;
-                               break;
-                              }
-
-       regen->setData(ticks, regenData);
-
-       //legend
+            int nb4=0;
+            QSqlQuery query4("select * from AVIS where TYPE_AVIS='mediocre'");
+            while(query4.next())
+            {
+                nb4++;
+            }
+          *set0 << nb0 ;
+          *set1 << nb1 ;
+          *set2 << nb2 ;
+           *set3 << nb3 ;
+           *set4 << nb4 ;
 
 
-        ui->customPlot->legend->setVisible(true);
-        ui->customPlot->axisRect()->insetLayout()->setInsetAlignment(0, Qt::AlignTop|Qt::AlignHCenter);
-       ui->customPlot->legend->setBrush(QColor(255, 255, 255, 100));
-       ui->customPlot->legend->setBorderPen(Qt::NoPen);
+        //![1]
 
-       QFont legendFont = font();
-       legendFont.setPointSize(10);
-       ui->customPlot->legend->setFont(legendFont);
-       ui->customPlot->setInteractions(QCP::iRangeDrag | QCP::iRangeZoom);
+        //![2]
+            QBarSeries *series = new QBarSeries();
+            series->append(set0);
+            series->append(set1);
+             series->append(set2);
+              series->append(set3);
+              series->append(set4);
+
+        //![2]
+
+        //![3]
+            QChart *chart = new QChart();
+            chart->addSeries(series);
+            chart->setTitle("nombre_Avis");
+            chart->setAnimationOptions(QChart::SeriesAnimations);
+        //![3]
+
+        //![4]
+            QStringList categories;
+            categories << "Type_Avis";
+
+            QBarCategoryAxis *axisX = new QBarCategoryAxis();
+            axisX->append(categories);
+            chart->addAxis(axisX, Qt::AlignBottom);
+            series->attachAxis(axisX);
+       int nb=0;
+       QSqlQuery query("select * from AVIS ");
+       while(query.next())//Retrieves the next record in the result,
+       {
+           nb++;
+       }
+
+            QValueAxis *axisY = new QValueAxis();
+            axisY->setRange(0,nb);
+            chart->addAxis(axisY, Qt::AlignLeft);
+            series->attachAxis(axisY);
+        //![4]
+
+        //![5]
+            chart->legend()->setVisible(true);
+            chart->legend()->setAlignment(Qt::AlignBottom);
+        //![5]
+
+        //![6]
+
+            // Used to display the chart
+            QChartView *chartView = new QChartView(chart);
+            chartView->setRenderHint(QPainter::Antialiasing);
+
+            chartView->resize(1000,500);
+            chartView->show();
+}
+
+void MainWindow::on_pushButtonreturn_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(1);
+}
+
+void MainWindow::on_pushButtonajouter_clicked()
+{
+     ui->stackedWidget->setCurrentIndex(3);
 }
 
 
 
+
+void MainWindow::on_Actualiser_clicked()
+{
+ ui->tab_carte->setModel(ct.afficherCarte());
+}

@@ -5,6 +5,7 @@
 #-------------------------------------------------
 
 QT       += core gui sql
+QT += core gui charts
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets widgets printsupport
 
@@ -31,8 +32,7 @@ SOURCES += \
     client.cpp \
         main.cpp \
         mainwindow.cpp \
-    connection.cpp \
-    qcustomplot.cpp
+    connection.cpp
 
 HEADERS += \
     QrCode.hpp \
@@ -40,8 +40,7 @@ HEADERS += \
     carte.h \
     client.h \
         mainwindow.h \
-    connection.h \
-    qcustomplot.h
+    connection.h
 
 FORMS += \
     mainwindow.ui

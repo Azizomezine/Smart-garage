@@ -1,5 +1,7 @@
 #include "client.h"
-
+#include <QtCharts>
+#include <QChartView>
+#include <QLineSeries>
 Client::Client()
 {
 REF="";
@@ -92,7 +94,7 @@ bool Client::modifier(int CIN)
 QSqlQueryModel * Client::rechercher(QString rech)
 {
     QSqlQueryModel * model= new QSqlQueryModel();
-        QString recher="select *  from client where REF like '%"+rech+"%'or NOM like '%"+rech+"%'or PRENOM like '%"+rech+"%'";
+        QString recher="select *  from client where REF like '%"+rech+"%'or NOM like '%"+rech+"%'or PRENOM like '%"+rech+"%'";//%rechercher  au mileu %
         model->setQuery(recher);
         return model;
 }

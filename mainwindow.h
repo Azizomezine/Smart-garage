@@ -63,19 +63,38 @@ private slots:
 
   void on_pushButton_3_clicked();
 
+ void on_pushButton_4_clicked();
 
 
-  void on_pushButton_4_clicked();
-void makePlot();
 
 void on_Button_croissant_clicked();
 
 void on_Button_dcroissant_clicked();
 
+
+
+
+void on_stat_clicked();
+
+void on_carte_client_clicked();
+
+void on_stat_avis_clicked();
+
+void on_pushButtonreturn_clicked();
+
+void on_pushButtonajouter_clicked();
+
+
+void on_ajouter_pts_clicked();
+
+void on_Actualiser_clicked();
+
 private:
     Ui::MainWindow *ui;
     Client Etmp;
     avis at;
+    Carte ct;
+int cinc;
 };
 
 #endif // MAINWINDOW_H
