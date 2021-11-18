@@ -30,7 +30,7 @@
      <string notr="true">background-image: url(:/im/Capture.PNG);</string>
     </property>
     <property name="currentIndex">
-     <number>3</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="page_9">
      <widget class="QPushButton" name="pushButtonAvis">
@@ -1043,6 +1043,25 @@ font-style:italic;
       </property>
       <property name="text">
        <string>Ajouter </string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButtonActualiser_3">
+      <property name="geometry">
+       <rect>
+        <x>540</x>
+        <y>110</y>
+        <width>101</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">
+color: rgb(0, 170, 255);
+font-size:15px;
+font-style:italic;</string>
+      </property>
+      <property name="text">
+       <string>Actualiser</string>
       </property>
      </widget>
     </widget>

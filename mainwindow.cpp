@@ -128,24 +128,34 @@ void MainWindow::on_ajouter_pts_clicked()
                          }
 
       int cin=ui->cin_comboBox3->currentText().toInt();
-       int pt;
-       QSqlQuery qry;
-      qry.prepare("SELECT PTS FROM CARTE");
-       while(qry.next()){ // iterator via query.next() pour acceder au contenu
-     pt=qry.value(1).toInt();
-      qDebug() << qry.value(1).toInt();
-       }
 
-      if(SERVICE=="VIDANGE")
-      {
-          pt+=50;
-      }
-      else if(SERVICE=="NETOYAGE")
-      {
-         pt+=30;
-      }
-      else  if(SERVICE=="NETTOYAGE/VIDANGE")
-      {pt+=100; }
+int pt;
+      QSqlQuery query;
+      query.prepare("SELECT * FROM CARTE WHERE CIN = :CIN");
+      query.bindValue(":CIN",cin);
+      query.exec();
+
+      while(query.next()){
+
+          pt=query.value(1).toInt();}
+/*
+  QSqlQuery query("SELECT PTS FROM CARTE where CIN=:CIN");
+query.bindValue(":CIN", cinc_string);
+       while(query.next()){ // iterator via query.next() pour acceder au contenu
+     pt=query.value(1).toInt();
+
+       }*/
+
+       if(SERVICE=="VIDANGE")
+       {
+           pt+=50;
+       }
+       else if(SERVICE=="NETOYAGE")
+       {
+          pt+=30;
+       }
+       else  if(SERVICE=="NETTOYAGE/VIDANGE")
+       {pt+=100; }
        Carte Cr(cin,pt);
     bool     test1=Cr.modifierCarte(cin);
 
@@ -213,12 +223,12 @@ int CIN=ui->cin_comboBox->currentText().toInt();
          QString SERVICE=ui->comboBox_2->currentText();
         Client C(CIN,REF,NOM,PRENOM,Numtel,ADRESSE_EMAIL,SERVICE);
 bool test=C.modifier(CIN);
-    if ((Numtel<10000000)||(Numtel>99999999) )
+    /*if ((Numtel<10000000)||(Numtel>99999999) )
            {
 
         QMessageBox::critical(0,qApp->tr("erreur"),qApp->tr("Echec de l'ajout veuillez verifier le num tel(8 chiffres)"),QMessageBox::Cancel);
     }
-else {
+else {*/
     if (test)
             {
 
@@ -253,7 +263,7 @@ else {
                                   QObject::tr("Ajout non effectué.\n"
                                               "click Cancel to exit."),QMessageBox::Cancel);}
 
-}}
+}
 
 
 void MainWindow::on_pushButtonActualiser_clicked()
@@ -296,7 +306,7 @@ void MainWindow::on_pushButtonClient_clicked()
 
 void MainWindow::on_pushButtonAvis_clicked()
 {
-    ui->stackedWidget->setCurrentIndex(3);
+    ui->stackedWidget->setCurrentIndex(4);
 }
 
 void MainWindow::on_pushButton_clicked()
@@ -722,4 +732,14 @@ void MainWindow::on_pushButtonajouter_clicked()
 void MainWindow::on_Actualiser_clicked()
 {
  ui->tab_carte->setModel(ct.afficherCarte());
+}
+
+void MainWindow::on_pushButtonActualiser_3_clicked()
+{
+    ui->tab_client->setModel(Etmp.afficher());
+     QSqlQueryModel * model= new QSqlQueryModel;
+                      model->setQuery("SELECT CIN FROM client");
+                  ui->cin_comboBox2->setModel(model);
+                      ui->cin_comboBox->setModel(model);
+                      ui->cin_comboBox3->setModel(model);
 }

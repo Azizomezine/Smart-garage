@@ -89,6 +89,8 @@ void on_ajouter_pts_clicked();
 
 void on_Actualiser_clicked();
 
+void on_pushButtonActualiser_3_clicked();
+
 private:
     Ui::MainWindow *ui;
     Client Etmp;

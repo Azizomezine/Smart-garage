@@ -67,7 +67,7 @@ bool Carte::modifierCarte(int cinc)
     QString cinc_string=QString::number(cinc);
     QString pts_string=QString::number(pts);
     QSqlQuery query;
-    query.prepare("UPDATE carte SET CIN=:CIN, pts=:pts WHERE CIN=:CIN");
+    query.prepare("UPDATE carte SET CIN=CIN, pts=:pts WHERE CIN=:CIN");
     query.bindValue(":CIN", cinc_string);
     query.bindValue(":pts", pts_string);
 
