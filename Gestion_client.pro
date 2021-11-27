@@ -6,7 +6,8 @@
 
 QT       += core gui sql
 QT += core gui charts
-
+QT += multimedia
+QT += serialport
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets widgets printsupport
 
 TARGET = Atelier_Connexion
@@ -27,18 +28,22 @@ CONFIG += c++11
 
 SOURCES += \
     QrCode.cpp \
+    arduino.cpp \
     avis.cpp \
     carte.cpp \
     client.cpp \
+    exportexcelobject.cpp \
         main.cpp \
         mainwindow.cpp \
     connection.cpp
 
 HEADERS += \
     QrCode.hpp \
+    arduino.h \
     avis.h \
     carte.h \
     client.h \
+    exportexcelobject.h \
         mainwindow.h \
     connection.h
 

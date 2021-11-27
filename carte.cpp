@@ -81,4 +81,12 @@ QSqlQueryModel * Carte::rechercherclient(int cinc)
     model->setQuery("select * from carte where CIN like '%"+cinc_string+"%' ");
         return model;
 }
+QSqlQueryModel* Carte::trierCarte()
+{
+    QSqlQueryModel* model=new QSqlQueryModel();
 
+          model->setQuery("SELECT * FROM carte order by pts");
+
+
+    return model;
+}

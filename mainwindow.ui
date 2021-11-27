@@ -20,17 +20,17 @@
    <widget class="QStackedWidget" name="stackedWidget">
     <property name="geometry">
      <rect>
-      <x>50</x>
-      <y>10</y>
+      <x>20</x>
+      <y>20</y>
       <width>1111</width>
       <height>591</height>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-image: url(:/im/Capture.PNG);</string>
+     <string notr="true"/>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>5</number>
     </property>
     <widget class="QWidget" name="page_9">
      <widget class="QPushButton" name="pushButtonAvis">
@@ -59,6 +59,19 @@
        <string> CLIENT</string>
       </property>
      </widget>
+     <widget class="QPushButton" name="pushButtoninderx4">
+      <property name="geometry">
+       <rect>
+        <x>980</x>
+        <y>510</y>
+        <width>75</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Themes</string>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="page_7">
      <widget class="QTabWidget" name="ModifierClient_2">
@@ -71,7 +84,7 @@
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-image: url(:/im/Capture.PNG);</string>
+       <string notr="true"/>
       </property>
       <property name="tabShape">
        <enum>QTabWidget::Triangular</enum>
@@ -717,7 +730,7 @@ font-style:italic;</string>
         <property name="geometry">
          <rect>
           <x>690</x>
-          <y>280</y>
+          <y>250</y>
           <width>221</width>
           <height>71</height>
          </rect>
@@ -738,7 +751,7 @@ font-style:italic;</string>
         <property name="geometry">
          <rect>
           <x>690</x>
-          <y>80</y>
+          <y>50</y>
           <width>200</width>
           <height>200</height>
          </rect>
@@ -806,9 +819,9 @@ font-style:italic;</string>
         <property name="geometry">
          <rect>
           <x>680</x>
-          <y>360</y>
+          <y>320</y>
           <width>231</width>
-          <height>91</height>
+          <height>111</height>
          </rect>
         </property>
         <property name="styleSheet">
@@ -849,8 +862,8 @@ font-style:italic;</string>
        <widget class="QPushButton" name="carte_client">
         <property name="geometry">
          <rect>
-          <x>714</x>
-          <y>20</y>
+          <x>700</x>
+          <y>0</y>
           <width>151</width>
           <height>41</height>
          </rect>
@@ -863,6 +876,32 @@ font-style:italic;</string>
         </property>
         <property name="text">
          <string>Afficher carte client</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="excel">
+        <property name="geometry">
+         <rect>
+          <x>90</x>
+          <y>390</y>
+          <width>91</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>fichier excel</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButtonfichierpdf">
+        <property name="geometry">
+         <rect>
+          <x>90</x>
+          <y>430</y>
+          <width>91</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>fichier pdf</string>
         </property>
        </widget>
       </widget>
@@ -1074,6 +1113,9 @@ font-style:italic;</string>
         <width>1041</width>
         <height>511</height>
        </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-image: url(:/im/Capture.PNG);</string>
       </property>
       <property name="tabPosition">
        <enum>QTabWidget::North</enum>
@@ -1440,17 +1482,83 @@ font-style:italic;</string>
       </property>
      </widget>
     </widget>
+    <widget class="QWidget" name="page_3">
+     <widget class="QListWidget" name="listheme">
+      <property name="geometry">
+       <rect>
+        <x>370</x>
+        <y>100</y>
+        <width>256</width>
+        <height>192</height>
+       </rect>
+      </property>
+      <item>
+       <property name="text">
+        <string>Midnight Sky</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Summer Citrus</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Hackerman</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Violet</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Dark</string>
+       </property>
+      </item>
+     </widget>
+     <widget class="QWidget" name="horizontalLayoutWidget">
+      <property name="geometry">
+       <rect>
+        <x>310</x>
+        <y>290</y>
+        <width>381</width>
+        <height>80</height>
+       </rect>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <widget class="QPushButton" name="cancel">
+         <property name="text">
+          <string>Cancel</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="Applytheme">
+         <property name="text">
+          <string>Apply</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QPushButton" name="pushButton_3">
+      <property name="geometry">
+       <rect>
+        <x>950</x>
+        <y>30</y>
+        <width>75</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>return</string>
+      </property>
+     </widget>
+    </widget>
    </widget>
-  </widget>
-  <widget class="QMenuBar" name="menuBar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>1194</width>
-     <height>22</height>
-    </rect>
-   </property>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -1471,6 +1579,16 @@ font-style:italic;</string>
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1194</width>
+     <height>22</height>
+    </rect>
+   </property>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>

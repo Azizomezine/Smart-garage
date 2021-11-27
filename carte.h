@@ -23,7 +23,7 @@ public:
     bool modifierCarte(int);
     QSqlQueryModel* trierCarte();
    QSqlQueryModel * rechercherclient(int cinc);
-    QSqlQueryModel* statistique();
+
 private:
     int cinc,pts;
 

@@ -15,6 +15,12 @@
 #include <QtCharts>
 #include <QChartView>
 #include <QLineSeries>
+#include "exportexcelobject.h"
+#include <QPrinter>
+#include <QPrintDialog>
+#include <QPropertyAnimation>
+#include <QFileDialog>//provides a dialog that allow users to select files or directories
+#include <QtSerialPort/QSerialPort>
 QT_CHARTS_USE_NAMESPACE
 using namespace QtCharts;
 using namespace qrcodegen;
@@ -23,6 +29,12 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    this->setStyleSheet("");
+    QFile file("C:\\Users\\azizo\\Desktop\\esprit\\2eme\\projet c++\\Gestion_Client\\stylesheets\\Irrorater.qss");
+    file.open(QFile::ReadOnly);
+    QString styleSheet = QLatin1String(file.readAll());
+    //MainWindow.setStyleSheet(styl);
+    qApp->setStyleSheet(styleSheet);
     ui->tab_client->setModel(Etmp.afficher());
     ui->tab_carte->setModel(ct.afficherCarte());
 ui->tableavis->setModel(at.afficher());
@@ -47,7 +59,7 @@ MainWindow::~MainWindow()
 
 
 
-
+//*************************************crud************
 void MainWindow::on_pushButtonAjouter_clicked()
 {
 
@@ -119,53 +131,7 @@ if (test)
                                           "click Cancel to exit."),QMessageBox::Cancel);
 
     }}
-void MainWindow::on_ajouter_pts_clicked()
-{
-    QString SERVICE=ui->comboBox_3->currentText();
-    if(SERVICE.isEmpty())
-                         {
-                             QMessageBox::critical(0,qApp->tr("erreur"),qApp->tr("veillez remplir les champs vides Pour continuez."),QMessageBox::Cancel);
-                         }
 
-      int cin=ui->cin_comboBox3->currentText().toInt();
-
-int pt;
-      QSqlQuery query;
-      query.prepare("SELECT * FROM CARTE WHERE CIN = :CIN");
-      query.bindValue(":CIN",cin);
-      query.exec();
-
-      while(query.next()){
-
-          pt=query.value(1).toInt();}
-/*
-  QSqlQuery query("SELECT PTS FROM CARTE where CIN=:CIN");
-query.bindValue(":CIN", cinc_string);
-       while(query.next()){ // iterator via query.next() pour acceder au contenu
-     pt=query.value(1).toInt();
-
-       }*/
-
-       if(SERVICE=="VIDANGE")
-       {
-           pt+=50;
-       }
-       else if(SERVICE=="NETOYAGE")
-       {
-          pt+=30;
-       }
-       else  if(SERVICE=="NETTOYAGE/VIDANGE")
-       {pt+=100; }
-       Carte Cr(cin,pt);
-    bool     test1=Cr.modifierCarte(cin);
-
-        if(test1)
-        {
-            QMessageBox:: information(nullptr, QObject::tr("OK"),
-                                               QObject::tr("Ajout carte Client effectué\n"
-                                                           "click cancel to exit."),QMessageBox::Cancel);
-        }
-}
 
 void MainWindow::on_pushButtonSupprimer_clicked()
 {
@@ -277,7 +243,7 @@ void MainWindow::on_pushButtonActualiser_clicked()
 }
 
 
-
+//*************************Metiers******************
 void MainWindow::on_pushButtonRechercher_clicked()
 {
 
@@ -292,11 +258,11 @@ void MainWindow::on_pushButtonRechercher_clicked()
 
 void MainWindow::on_Button_dcroissant_clicked()
 {
-  ui->tab_client->setModel(Etmp.tri());
+  ui->tab_client->setModel(Etmp.trid());
 }
 void MainWindow::on_Button_croissant_clicked()
 {
-    ui->tab_client->setModel(Etmp.trid());
+    ui->tab_client->setModel(Etmp.tri());
 }
 
 void MainWindow::on_pushButtonClient_clicked()
@@ -519,7 +485,7 @@ void MainWindow::on_cin_comboBox2_activated(const QString &arg1)
 
 void MainWindow::on_pushButton_3_clicked()
 {
-     ui->stackedWidget->setCurrentIndex(2);
+     ui->stackedWidget->setCurrentIndex(0);
 }
 
 void MainWindow::on_pushButton_4_clicked()
@@ -742,4 +708,201 @@ void MainWindow::on_pushButtonActualiser_3_clicked()
                   ui->cin_comboBox2->setModel(model);
                       ui->cin_comboBox->setModel(model);
                       ui->cin_comboBox3->setModel(model);
+}
+
+
+void MainWindow::on_excel_clicked()
+{
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Excel file"), qApp->applicationDirPath (),
+                                                       tr("Excel Files (*.xls)"));
+       if (fileName.isEmpty())
+           return;
+
+       ExportExcelObject obj(fileName, "client", ui->tab_client);
+
+       //colums to export
+       obj.addField(0, "CIN", "char(50)");
+       obj.addField(1, "REF", "char(50)");
+       obj.addField(2, "NOM", "char(50)");
+       obj.addField(3, "PRENOM", "char(50)");
+       obj.addField(4, "ADRESSE", "char(50)");
+       obj.addField(5, "NUMTEL", "char(50)");
+       obj.addField(6, "SERVICE", "char(50)");
+
+
+
+       int retVal = obj.export2Excel();
+       if( retVal > 0)
+       {
+           QMessageBox::information(this, tr("Done"),
+                                    QString(tr("%1 records exported!")).arg(retVal)
+                                    );
+       }
+}
+//*******************valeur ajouter
+void MainWindow::on_pushButtonfichierpdf_clicked()
+{
+    QString strStream;
+       QTextStream out(&strStream);
+
+       const int rowCount = ui->tab_client->model()->rowCount();
+     const int columnCount = ui->tab_client->model()->columnCount();
+
+       out <<  "<html>\n"
+               "<head>\n"
+               "<meta Content=\"Text/html; charset=Windows-1251\">\n"
+            <<  QString("<title>%1</title>\n").arg("Title")
+             <<  "</head>\n"
+              <<"<body bgcolor=#ffffff link=#5000A0>\n"
+
+              //     "<align='right'> " << datefich << "</align>"
+              <<"<center> <H1>Liste des clients </H1></br></br><table border=1 cellspacing=0 cellpadding=2>\n";
+
+
+       // headers
+       out << "<thead><tr bgcolor=#f0f0f0>";
+       for (int column = 0; column < columnCount; column++)
+           if (!ui->tab_client->isColumnHidden(column))
+               out << QString("<th>%1</th>").arg(ui->tab_client->model()->headerData(column, Qt::Horizontal).toString());
+       out << "</tr></thead>\n";
+
+       // data table
+       for (int row = 0; row < rowCount; row++) {
+           out << "<tr>";
+           for (int column = 0; column < columnCount; column++) {
+               if (!ui->tab_client->isColumnHidden(column)) {
+                   QString data = ui->tab_client->model()->data(ui->tab_client->model()->index(row, column)).toString().simplified();
+                   out << QString("<td bkcolor=0>%1</td>").arg((!data.isEmpty()) ? data : QString("&nbsp;"));
+               }
+           }
+           out << "</tr>\n";
+       }
+       out <<  "</table>\n"
+               "</body>\n"
+               "</html>\n";
+
+
+
+           QString fileName = QFileDialog::getSaveFileName((QWidget* )0, "Sauvegarder en PDF", QString(), "*.pdf");
+           if (QFileInfo(fileName).suffix().isEmpty()) { fileName.append(".pdf"); }
+           QPrinter *printer=new  QPrinter(QPrinter::PrinterResolution);
+           printer->setOutputFormat(QPrinter::PdfFormat);
+           printer->setPaperSize(QPrinter::A4);
+           printer->setOutputFileName(fileName);
+
+           QTextDocument doc;
+           doc.setHtml(strStream);
+           doc.setPageSize(printer->pageRect().size()); // This is necessary if you want to hide the page number
+           doc.print(printer);
+
+           QPrinter *p=new QPrinter();
+           QPrintDialog dialog(p,this);
+           if(dialog.exec()== QDialog::Rejected)
+           {
+               return;
+           }
+}
+void MainWindow::on_ajouter_pts_clicked()
+{
+    QString SERVICE=ui->comboBox_3->currentText();
+    if(SERVICE.isEmpty())
+                         {
+                             QMessageBox::critical(0,qApp->tr("erreur"),qApp->tr("veillez remplir les champs vides Pour continuez."),QMessageBox::Cancel);
+                         }
+
+      int cin=ui->cin_comboBox3->currentText().toInt();
+
+int pt;
+      QSqlQuery query;
+      query.prepare("SELECT * FROM CARTE WHERE CIN = :CIN");
+      query.bindValue(":CIN",cin);
+      query.exec();
+
+      while(query.next()){
+
+          pt=query.value(1).toInt();}
+/*
+  QSqlQuery query("SELECT PTS FROM CARTE where CIN=:CIN");
+query.bindValue(":CIN", cinc_string);
+       while(query.next()){ // iterator via query.next() pour acceder au contenu
+     pt=query.value(1).toInt();
+
+       }*/
+
+       if(SERVICE=="VIDANGE")
+       {
+           pt+=50;
+       }
+       else if(SERVICE=="NETOYAGE")
+       {
+          pt+=30;
+       }
+       else  if(SERVICE=="NETTOYAGE/VIDANGE")
+       {pt+=100; }
+       Carte Cr(cin,pt);
+    bool     test1=Cr.modifierCarte(cin);
+
+        if(test1)
+        {
+            QMessageBox:: information(nullptr, QObject::tr("OK"),
+                                               QObject::tr("Ajout pts dans carte Client effectué\n"
+                                                           "click cancel to exit."),QMessageBox::Cancel);
+        }
+}
+
+
+void MainWindow::on_Applytheme_clicked()
+{
+    QString item;
+    item=ui->listheme->currentItem()->text();
+    if(item=="Midnight Sky")
+    {
+        QFile file("C:\\Users\\azizo\\Desktop\\esprit\\2eme\\projet c++\\Gestion_Client\\stylesheets\\Takezo.qss");
+        file.open(QFile::ReadOnly);
+        QString styleSheet = QLatin1String(file.readAll());
+        //MainWindow.setStyleSheet(styl);
+        qApp->setStyleSheet(styleSheet);
+    }
+    if(item=="Summer Citrus")
+    {
+        QFile file("C:\\Users\\azizo\\Desktop\\esprit\\2eme\\projet c++\\Gestion_Client\\stylesheets\\Irrorater.qss");
+        file.open(QFile::ReadOnly);
+        QString styleSheet = QLatin1String(file.readAll());
+        //MainWindow.setStyleSheet(styl);
+        qApp->setStyleSheet(styleSheet);
+    }
+    if(item=="Hackerman")
+    {
+        QFile file("C:\\Users\\azizo\\Desktop\\esprit\\2eme\\projet c++\\Gestion_Client\\stylesheets\\Hookmark.qss");
+        file.open(QFile::ReadOnly);
+        QString styleSheet = QLatin1String(file.readAll());
+        //MainWindow.setStyleSheet(styl);
+        qApp->setStyleSheet(styleSheet);
+    }
+    if(item=="Violet")
+    {
+        QFile file("C:\\Users\\azizo\\Desktop\\esprit\\2eme\\projet c++\\Gestion_Client\\stylesheets\\Wstartpage.qss");
+        file.open(QFile::ReadOnly);
+        QString styleSheet = QLatin1String(file.readAll());
+        //MainWindow.setStyleSheet(styl);
+        qApp->setStyleSheet(styleSheet);
+    }
+    if(item=="Dark")
+    {
+        QFile file("C:\\Users\\azizo\\Desktop\\esprit\\2eme\\projet c++\\Gestion_Client\\stylesheets\\Combinear.qss");
+        file.open(QFile::ReadOnly);
+        QString styleSheet = QLatin1String(file.readAll());
+        //MainWindow.setStyleSheet(styl);
+        qApp->setStyleSheet(styleSheet);
+    }
+}
+
+void MainWindow::on_pushButtoninderx4_clicked()
+{
+      ui->stackedWidget->setCurrentIndex(5);
+}
+
+void MainWindow::on_cancel_clicked()
+{
+     this->close();
 }

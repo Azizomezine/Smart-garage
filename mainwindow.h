@@ -91,8 +91,25 @@ void on_Actualiser_clicked();
 
 void on_pushButtonActualiser_3_clicked();
 
+
+
+void on_excel_clicked();
+
+void on_pushButtonfichierpdf_clicked();
+
+
+
+
+void on_Applytheme_clicked();
+
+void on_pushButtoninderx4_clicked();
+
+void on_cancel_clicked();
+
 private:
     Ui::MainWindow *ui;
+
+
     Client Etmp;
     avis at;
     Carte ct;
