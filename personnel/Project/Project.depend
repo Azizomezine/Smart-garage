@@ -1,0 +1,91 @@
+# depslib dependency file v1.0
+1636637520 source:e:\teaching\esprit\esprit2\semestre1\poo\s9\project\src\note.cpp
+	"Note.h"
+
+1636639308 e:\teaching\esprit\esprit2\semestre1\poo\s9\project\include\note.h
+	<string>
+	<iostream>
+
+1636971067 source:e:\teaching\esprit\esprit2\semestre1\poo\s9\project\main.cpp
+	<iostream>
+	"NoteManager.h"
+
+1636637676 e:\teaching\esprit\esprit2\semestre1\poo\s9\project\include\tag.h
+	"Note.h"
+
+1636637775 source:e:\teaching\esprit\esprit2\semestre1\poo\s9\project\src\tag.cpp
+	"Tag.h"
+
+1636640033 e:\teaching\esprit\esprit2\semestre1\poo\s9\project\include\notemanager.h
+	"Tag.h"
+	<list>
+	<fstream>
+
+1636971137 source:e:\teaching\esprit\esprit2\semestre1\poo\s9\project\src\notemanager.cpp
+	"NoteManager.h"
+
+1637136725 source:e:\teaching\esprit\esprit2\semestre1\poo\s10\project\main.cpp
+	<iostream>
+
+1636637520 source:e:\teaching\esprit\esprit2\semestre1\poo\s10\project\src\note.cpp
+	"Note.h"
+
+1636639308 e:\teaching\esprit\esprit2\semestre1\poo\s10\project\include\note.h
+	<string>
+	<iostream>
+
+1636637775 source:e:\teaching\esprit\esprit2\semestre1\poo\s10\project\src\tag.cpp
+	"Tag.h"
+
+1636637676 e:\teaching\esprit\esprit2\semestre1\poo\s10\project\include\tag.h
+	"Note.h"
+
+1637243445 source:c:\users\azizo\desktop\esprit\2eme\c++\2-td\td6\project\src\note.cpp
+	"Note.h"
+
+1637245785 c:\users\azizo\desktop\esprit\2eme\c++\2-td\td6\project\include\note.h
+	<string>
+	<iostream>
+
+1636637775 source:c:\users\azizo\desktop\esprit\2eme\c++\2-td\td6\project\src\tag.cpp
+	"Tag.h"
+
+1636637676 c:\users\azizo\desktop\esprit\2eme\c++\2-td\td6\project\include\tag.h
+	"Note.h"
+
+1637250362 source:c:\users\azizo\desktop\esprit\2eme\c++\2-td\td6\project\main.cpp
+	<iostream>
+	"Tag.h"
+	"Note.h"
+	"NoteManager.h"
+
+1637250286 c:\users\azizo\desktop\esprit\2eme\c++\2-td\td6\project\notemanager.h
+	"Tag.h"
+	<list>
+
+1637250286 source:c:\users\azizo\desktop\esprit\2eme\c++\2-td\td6\project\notemanager.cpp
+	"NoteManager.h"
+
+1637250362 source:c:\users\sinoh\desktop\project\main.cpp
+	<iostream>
+	"Tag.h"
+	"Note.h"
+	"NoteManager.h"
+
+1636637676 c:\users\sinoh\desktop\project\include\tag.h
+	"Note.h"
+
+1637847101 c:\users\sinoh\desktop\project\include\note.h
+	<string>
+	<iostream>
+
+1637250286 c:\users\sinoh\desktop\project\notemanager.h
+	"Tag.h"
+	<list>
+
+1636637775 source:c:\users\sinoh\desktop\project\src\tag.cpp
+	"Tag.h"
+
+1637847066 source:c:\users\sinoh\desktop\project\src\note.cpp
+	"Note.h"
+
