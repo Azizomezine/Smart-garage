@@ -21,6 +21,8 @@
 #include <QPropertyAnimation>
 #include <QFileDialog>//provides a dialog that allow users to select files or directories
 #include <QtSerialPort/QSerialPort>
+
+
 QT_CHARTS_USE_NAMESPACE
 using namespace QtCharts;
 using namespace qrcodegen;
@@ -47,6 +49,18 @@ ui->Nom->setValidator(new QRegExpValidator( QRegExp("[A-Za-z0]{0,10}"), this ));
 ui->REF->setValidator(new QRegExpValidator( QRegExp("[A-Za-z0-9]{0,10}"), this ));
 ui->REF2->setValidator(new QRegExpValidator( QRegExp("[A-Za-z0]{0,10}"), this ));
 ui->Prenom->setValidator(new QRegExpValidator( QRegExp("[A-Za-z0]{0,10}"), this ));
+ui->stackedWidget->setCurrentIndex(0);
+//*************Arduino*******************************************************************
+int ret=A.connect_arduino(); // lancer la connexion à arduino
+    switch(ret){
+    case(0):qDebug()<< "arduino is available and connected to : "<< A.getarduino_port_name();
+        break;
+    case(1):qDebug() << "arduino is available but not connected to :" <<A.getarduino_port_name();
+       break;
+    case(-1):qDebug() << "arduino is not available";
+    }
+     QObject::connect(A.getserial(),SIGNAL(readyRead()),this,SLOT(update_label())); // permet de lancer
+     //le slot update_label suite à la reception du signal readyRead (reception des données).
 }
 
 
@@ -240,6 +254,7 @@ void MainWindow::on_pushButtonActualiser_clicked()
                   ui->cin_comboBox2->setModel(model);
                       ui->cin_comboBox->setModel(model);
                       ui->cin_comboBox3->setModel(model);
+                     ui->cin_comboBox2_2->setModel(model);
 }
 
 
@@ -480,6 +495,21 @@ void MainWindow::on_cin_comboBox2_activated(const QString &arg1)
              ui->comboBox_2->setCurrentText(query.value(6).toString());
 
     }
+}
+void MainWindow::on_cin_comboBox2_2_activated(const QString &arg1)
+{
+    int MAT=ui->cin_comboBox2_2->currentText().toInt();
+
+    QSqlQuery query;
+    query.prepare("SELECT * FROM CLIENT WHERE CIN = :CIN");
+    query.bindValue(":CIN",MAT);
+    query.exec();
+
+    while(query.next()){
+
+         ui->service->setText(query.value(6).toString());
+
+}
 }
 
 
@@ -906,3 +936,52 @@ void MainWindow::on_cancel_clicked()
 {
      this->close();
 }
+
+void MainWindow::on_pushButton_5_clicked()
+{
+        ui->stackedWidget->setCurrentIndex(0);
+}
+
+//******************arduino****************************
+void MainWindow::on_arduino_clicked()
+{
+     ui->stackedWidget->setCurrentIndex(6);
+}
+/*void MainWindow::update_label()
+{
+    data=A.read_from_arduino();
+
+    if(data=="1")
+
+        ui->label_3->setText("En_cours"); // si les données reçues de arduino via la liaison série sont égales à 1
+    // alors afficher ON
+
+    else if (data=="0")
+
+        ui->label_3->setText("Te");   // si les données reçues de arduino via la liaison série sont égales à 0
+     //alors afficher ON
+}
+*/
+
+void MainWindow::on_pushButton_11_clicked()
+{
+   QString ser=ui->service;
+    if()
+     A.write_to_arduino("1"); //envoyer 1 à arduino
+}
+
+
+
+
+void MainWindow::on_pushButtonActualiser_4_clicked()
+{
+    ui->tab_client->setModel(Etmp.afficher());
+     QSqlQueryModel * model= new QSqlQueryModel;
+                      model->setQuery("SELECT CIN FROM client");
+                  ui->cin_comboBox2->setModel(model);
+                      ui->cin_comboBox->setModel(model);
+                      ui->cin_comboBox3->setModel(model);
+                     ui->cin_comboBox2_2->setModel(model);
+}
+
+

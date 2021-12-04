@@ -7,6 +7,7 @@
 #include "avis.h"
 #include "QrCode.hpp"
 #include "carte.h"
+#include "arduino.h"
 namespace Ui {
 class MainWindow;
 }
@@ -105,6 +106,18 @@ void on_Applytheme_clicked();
 void on_pushButtoninderx4_clicked();
 
 void on_cancel_clicked();
+//void update_label();   // slot permettant la mise à jour du label état de la lampe 1,
+  // ce slot est lancé à chaque réception d'un message de Arduino
+
+  void on_pushButton_5_clicked();
+
+  void on_arduino_clicked();
+
+  void on_cin_comboBox2_2_activated(const QString &arg1);
+
+  void on_pushButtonActualiser_4_clicked();
+
+  void on_pushButton_11_clicked();
 
 private:
     Ui::MainWindow *ui;
@@ -114,6 +127,9 @@ private:
     avis at;
     Carte ct;
 int cinc;
+QByteArray data; // variable contenant les données reçues
+
+   Arduino A; // objet temporaire
 };
 
 #endif // MAINWINDOW_H
