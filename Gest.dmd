@@ -1,0 +1,8 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<OSDM_Design class="oracle.dbtools.crest.model.design.Design" name="Gest" id="1D6D8944-AD4B-826C-FC09-3B7B9E6E2746" version="3.5">
+<createdBy>azizo</createdBy>
+<createdTime>2021-11-03 17:34:32 UTC</createdTime>
+<ownerDesignName>Gest</ownerDesignName>
+<capitalNames>false</capitalNames>
+<designId>1D6D8944-AD4B-826C-FC09-3B7B9E6E2746</designId>
+</OSDM_Design>
